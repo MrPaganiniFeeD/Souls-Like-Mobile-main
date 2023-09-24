@@ -1,0 +1,44 @@
+I) Installation via manifest file
+
+Download and install old version of Epic Games launcher 10.19.2
+https://mega.nz/file/CgFABbZD#PrY_brhl8e9OPBOIkoc4nUG8Kr63v78-PxkcrqyxYdo
+
+Launch it. Let it download the update. Login into launcher. 
+Then immediately shut down it through the task manager so the launcher do not download the updates completely. 
+Then right click on shortcut, choose properties and add -noselfupdate after the text: ".........Binaries\Win32\EpicGamesLauncher.exe " -noselfupdate
+
+To install archives with manifest, go along the path C:\Program Files (x86)\Epic Games\Launcher\VaultCache and transfer the contents of the archive there. 
+After adding a new folder in the VaultCache don’t forget to restart the launcher to asset appeared in your local library.
+Now download asset via Epic Games Launcher.
+
+-----------------------
+
+II) Installation via a ready-made project
+
+Installation:
+
+1. Choose the zip file that corresponds to the version of Unreal 4 that you're running (i.e. UE4_ASSET_NAME 4.26 - goes with Unreal 4 version 4.26), then unzip the contents of the folder to your Unreal Projects folder location (default C:\Users\YourName\Documents\Unreal Projects).
+
+2. Restart the Epic Games Launcher and open the new project entitled "UE4_ASSET_NAME".
+
+3. Once it opens, open the example level "Example_Name". 
+
+-----------------------
+
+III) Asset migration to an existing project:
+
+1. Open the example level listed above. 
+
+2. Navigate to the folder "Example_Asset_Name". 
+
+3. Right-Click it and choose "Migrate". Say "ok" to the asset report window that pops-up. 
+
+4. A new window will open entitled "Choose a destination content folder". Navigate to the content folder of the project that you wish to migrate your assets to, and choose "select folder". Might take a few minutes to copy all of the data into your new project folder.
+
+-----------------------
+
+IV) UE Plugin
+
+Installation: Move the plugin folder to the following path: UE_4.25\Engine\Plugins\Marketplace
+
+You're all done!

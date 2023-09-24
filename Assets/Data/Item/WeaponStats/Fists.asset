@@ -1,0 +1,250 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576fdf38e93b92e41b5a56506afb8678, type: 3}
+  m_Name: Fists
+  m_EditorClassIdentifier: 
+  _name: Fists
+  _discription: 
+  _maxItemsInInventorySlot: 1
+  _icon: {fileID: 0}
+  _pefab: {fileID: 8443761140263108887, guid: a22fd2b169192614180e807adcfad972, type: 3}
+  _type: 1
+  _itemBuffStats:
+    _healthBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _damageBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _staminaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _manaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _intelligenceBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _protectionBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _dexterityBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _healthPercent: 0
+    _damagePercent: 0
+    _staminaPercent: 0
+    _manaPercent: 0
+    _intelligencePercent: 0
+    _protectionPercent: 0
+    _dectertityPercent: 0
+  _modelInfo:
+    _isNacktModelUnload: 0
+    _modelsName: []
+    _modelInHand: 5
+  _attacksInfo:
+  - _name: L1
+    _attackType: 0
+    _damage: 1
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - _name: L2
+    _attackType: 0
+    _damage: 2
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - _name: L3
+    _attackType: 0
+    _damage: 2
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - _name: R1
+    _attackType: 0
+    _damage: 1
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - _name: R2
+    _attackType: 0
+    _damage: 2
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  - _name: R3
+    _attackType: 0
+    _damage: 3
+    _duration: 1
+    _manaCost: 0
+    _forceMove: 0
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  _locationWeaponInHandType: 4
+  _animationInfo:
+    _shield: 0
+    _aiming: 0
+    _weaponNumberAnimation: 0
+    _leftRightAnimation: 0
+    _leftWeaponAnimation: 0
+    _rightWeaponAnimation: 0
+    _attackSideAnimation: 0
