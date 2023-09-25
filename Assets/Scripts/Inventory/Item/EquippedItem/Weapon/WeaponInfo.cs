@@ -26,7 +26,7 @@ public class WeaponInfo  : EquippedInfo, IWeaponInfo
 
     public IAnimationInfo AnimationInfo => _animationInfo;
 
-    public List<AttackData> AttackInfos => _attacksInfo;
+    public List<AttackData> Attack => _attacksInfo;
 
     public LocationWeaponInHandType LocationWeaponInHandType => _locationWeaponInHandType;
 

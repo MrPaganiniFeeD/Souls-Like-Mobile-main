@@ -8,6 +8,6 @@ public interface IWeaponInfo : IEquippedItemInfo
 {
     GameObject Prefab { get; }
     IAnimationInfo AnimationInfo { get; }
-    List<AttackData> AttackInfos { get; }
+    List<AttackData> Attack { get; }
     LocationWeaponInHandType LocationWeaponInHandType { get; }
 }

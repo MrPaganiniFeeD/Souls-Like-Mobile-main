@@ -88,7 +88,7 @@ public abstract class WeaponSlotState
     {
         if (weapon.Attack.Count == 0)
         {
-            foreach (var attackInfo in weapon.Info.AttackInfos)
+            foreach (var attackInfo in weapon.Info.Attack)
             {
                 switch (attackInfo.AttackType)
                 {

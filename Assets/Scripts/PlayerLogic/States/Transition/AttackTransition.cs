@@ -7,17 +7,14 @@ namespace PlayerLogic.States.Transition
 {
     public class AttackTransition : ITransition
     {
-        public PlayerStateMachine PlayerStateMachine { get; }
+        private PlayerStateMachine _stateMachine { get; }
         private readonly IInputService _inputService;
-        private readonly PlayerStats _playerStats;
 
-        public AttackTransition(PlayerStateMachine playerStateMachine,
-            IInputService inputService,
-            PlayerStats playerStats)
+        public AttackTransition(PlayerStateMachine stateMachine,
+            IInputService inputService)
         {
-            PlayerStateMachine = playerStateMachine;
+            _stateMachine = stateMachine;
             _inputService = inputService;
-            _playerStats = playerStats;
         }
 
         public void Enter()
@@ -49,6 +46,6 @@ namespace PlayerLogic.States.Transition
             Transit(ButtonType.MainButton);
 
         private void Transit(ButtonType button) => 
-            PlayerStateMachine.Enter<AttackState, IAttackStatePayloaded>(new AttackStatePayloaded(button));
+            _stateMachine.Enter<AttackState, IAttackStatePayloaded>(new AttackStatePayloaded(button));
     }
 }

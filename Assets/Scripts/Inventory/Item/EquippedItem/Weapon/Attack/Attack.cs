@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Inventory.Item.EquippedItem.Weapon.Attack
 {
@@ -10,7 +11,7 @@ namespace Inventory.Item.EquippedItem.Weapon.Attack
         [SerializeField] private AttackType _attackType;
         [SerializeField] private int _damage;
         [SerializeField] private float _duration;
-        [SerializeField] private int _manaCost;
+        [FormerlySerializedAs("_manaCost")] [SerializeField] private int staminaCost;
         [SerializeField] private float _forceMove;
         [SerializeField] private AnimationCurve _curve;
         [SerializeField] private AudioClip _attackClip;
@@ -23,7 +24,7 @@ namespace Inventory.Item.EquippedItem.Weapon.Attack
         public int Damage => _damage;
         public AudioClip AttackAudioClip => _attackClip;
         public float Duration => _duration;
-        public int ManaCost => _manaCost;
+        public int StaminaCost => staminaCost;
         public float ForceMove => _forceMove;
     }
 }

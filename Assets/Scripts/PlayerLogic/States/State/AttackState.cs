@@ -137,7 +137,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
     {
         DisableWeaponCollider();
         counterCombo++;
-        if (isClickedAttackButton && counterCombo + 1 <= weapon.Info.AttackInfos.Count)
+        if (isClickedAttackButton && counterCombo + 1 <= weapon.Info.Attack.Count)
             Attack(weapon, counterCombo, ref isClickedAttackButton);
         else
             EndAttack(locationWeaponInHand);
@@ -147,6 +147,12 @@ public class AttackState : PlayerState, IAttackState, IDisposable
         int counterCombo,
         ref bool isClickedAttackButton)
     {
+        if (TrySubtractStamina(weaponItem, counterCombo) == false)
+        {
+            _playerStateMachine.Enter<IdleState>();
+            return;
+        }
+
         _attackingWeapon = weaponItem;
         _currentNumberAttack = counterCombo;
         _attackingWeaponPrefab = weaponItem.SpawnedPrefab.GetComponent<WeaponPrefab>();
@@ -161,13 +167,16 @@ public class AttackState : PlayerState, IAttackState, IDisposable
         Move(weaponItem, counterCombo);
     }
 
+    private bool TrySubtractStamina(WeaponItem weaponItem, int numberAttack) => 
+        _playerStats.Stamina.TryUse(weaponItem.Info.Attack[numberAttack].StaminaCost);
+
     private void Move(WeaponItem weaponItem, int counterCombo)
     {
         _moveModule.MoveAlongACurveUsingCharacterController(
             _transform.forward,
-            weaponItem.Info.AttackInfos[counterCombo].Duration,
+            weaponItem.Info.Attack[counterCombo].Duration,
             1,
-            weaponItem.Info.AttackInfos[counterCombo].Curve);
+            weaponItem.Info.Attack[counterCombo].Curve);
     }
 
     private void Rotate()
@@ -189,7 +198,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
 
     private void PlayAudioClip(WeaponItem weaponItem, int numberAttack)
     {
-        _audioSource.clip = weaponItem.Info.AttackInfos[numberAttack].AttackAudioClip;
+        _audioSource.clip = weaponItem.Info.Attack[numberAttack].AttackAudioClip;
         _audioSource.volume = 1;
         _audioSource.PlayDelayed(0.2f);
     }
@@ -227,7 +236,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
     private void HandlerMakeDamage(IDamageable damageable)
     {
         var damagePlayer = _playerStats.Damage.Value;
-        var damageWeapon = _attackingWeapon.Info.AttackInfos[_currentNumberAttack].Damage;
+        var damageWeapon = _attackingWeapon.Info.Attack[_currentNumberAttack].Damage;
         
         damageable.ApplyDamage(damagePlayer + damageWeapon);
     }
