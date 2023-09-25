@@ -36,6 +36,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
     private IMoveModule _moveModule;
     private readonly AudioSource _audioSource;
     private readonly PlayerCamera _playerCamera;
+    private readonly Transform _transform;
 
 
     public AttackState(List<ITransition> transitions,
@@ -46,7 +47,8 @@ public class AttackState : PlayerState, IAttackState, IDisposable
         PlayerStateAnimator animator,
         IMoveModule moveModule,
         AudioSource audioSource,
-        PlayerCamera playerCamera) : base(transitions)
+        PlayerCamera playerCamera,
+        Transform transform) : base(transitions)
     {
         _playerStateMachine = playerStateMachine;
         _equippedInventory = equippedInventory;
@@ -56,6 +58,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
         _moveModule = moveModule;
         _audioSource = audioSource;
         _playerCamera = playerCamera;
+        _transform = transform;
 
         _inputService.MainAttackButtonUp += OnMainAttackButtonUp;
         _inputService.LeftHandAttackButtonUp += OnLeftHandAttackButtonUp;
@@ -160,7 +163,8 @@ public class AttackState : PlayerState, IAttackState, IDisposable
 
     private void Move(WeaponItem weaponItem, int counterCombo)
     {
-        _moveModule.MoveAlongACurveUsingCharacterController(_inputService.Axis,
+        _moveModule.MoveAlongACurveUsingCharacterController(
+            _transform.forward,
             weaponItem.Info.AttackInfos[counterCombo].Duration,
             1,
             weaponItem.Info.AttackInfos[counterCombo].Curve);

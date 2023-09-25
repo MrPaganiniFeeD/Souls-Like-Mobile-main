@@ -48,7 +48,8 @@ public class PlayerFabrics : MonoBehaviour
         
         _fabricTransitions = new FabricTransitions(_inputService,
             _playerStateMachine,
-            _rollStateData);
+            _rollStateData,
+            _playerStats);
         _fabricState = new FabricPlayerStates(_inputService,
             _inventoryService,
             _playerStats,

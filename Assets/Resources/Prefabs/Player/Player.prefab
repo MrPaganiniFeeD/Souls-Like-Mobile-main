@@ -30260,13 +30260,13 @@ MonoBehaviour:
   _isLocked: 0
   _stateInfos:
   - _state: 1
-    _transitions: 0100000002000000
+    _transitions: 010000000200000004000000
   - _state: 2
-    _transitions: 0000000002000000
+    _transitions: 000000000200000004000000
   - _state: 3
     _transitions: 
   - _state: 7
-    _transitions: 
+    _transitions: 05000000
 --- !u!114 &3339540984521034804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30296,10 +30296,30 @@ MonoBehaviour:
     CostTransition: 0
     MoveCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5636297
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    Center: 0
+    Radius: 1
 --- !u!114 &3993461137014518730
 MonoBehaviour:
   m_ObjectHideFlags: 0

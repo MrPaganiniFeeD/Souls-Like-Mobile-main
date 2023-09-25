@@ -102,7 +102,7 @@ namespace PlayerLogic.Animation
         public void StartBackRollAnimation() => 
             _animator.SetTrigger(NameAnimationParameters.BackRolling);
 
-        public void StartForewardRollAnimation() => 
+        public void StartForwardRollAnimation() => 
             _animator.SetTrigger(NameAnimationParameters.Rolling);
 
         public void StopRollAnimation() => 

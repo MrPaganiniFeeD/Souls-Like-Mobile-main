@@ -20,11 +20,13 @@ namespace Fabrics
 
         public FabricTransitions(IInputService inputService,
             PlayerStateMachine playerStateMachine,
-            RollStateData rollingData)
+            RollStateData rollingData,
+            PlayerStats playerStats)
         {
             _inputService = inputService;
             _playerStateMachine = playerStateMachine;
             _rollingData = rollingData;
+            _playerStats = playerStats;
         }
         public ITransition CreateTransition(TypeTransitions type)
         {

@@ -31,6 +31,7 @@ namespace Fabrics
         private IEnumerable<PlayerStateInfo> _stateInfos;
         private BaseMoveModule _baseMove;
         private AudioSource _audioSource;
+        private CharacterController _characterController;
 
         public FabricPlayerStates(IInputService inputService,
             IInventoryService inventoryService,
@@ -52,9 +53,10 @@ namespace Fabrics
             _playerCamera = playerCamera;
             _rollStateData = rollStateData;
 
+            _characterController = _player.GetComponent<CharacterController>();
             _baseMove = new BaseMoveModule(_player.transform,
                 Camera.main,
-                _player.GetComponent<CharacterController>(),
+                _characterController,
                 monoBehaviour: _player);
             
         }
@@ -70,7 +72,7 @@ namespace Fabrics
                     _inputService, 
                      Camera.main,
                     _player.transform,
-                    _player.GetComponent<CharacterController>(),
+                    _characterController,
                     _animator,
                     _inventoryService,
                     _audioSource),
@@ -82,13 +84,16 @@ namespace Fabrics
                     _animator,
                     _baseMove,
                     _audioSource,
-                    _playerCamera),
+                    _playerCamera,
+                    _player.transform),
                 [typeof(RollState)] = new RollState(GetTransition(TypePlayerState.Roll),
+                    _playerStateMachine,
                     _animator,
                     _playerStats,
                     _inputService,
                     _baseMove,
-                    _rollStateData)
+                    _rollStateData,
+                    _characterController)
             };
             return allState;
         }

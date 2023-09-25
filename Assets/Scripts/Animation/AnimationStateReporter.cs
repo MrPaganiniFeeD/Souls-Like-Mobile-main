@@ -4,7 +4,7 @@ using DefaultNarmespace.Player.AnimatorReporter;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class AnimationStateReader : StateMachineBehaviour
+public class AnimationStateReporter : StateMachineBehaviour
 {
     private IAnimationStateReader _animationStateReader;
 

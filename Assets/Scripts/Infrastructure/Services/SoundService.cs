@@ -17,7 +17,7 @@ namespace Infrastructure.Services
         public void EnableMusic()
         {
             _audioSource.loop = true;
-            _audioSource.volume = 0.6f;
+            _audioSource.volume = 0.67f;
             _audioSource.clip = _musics[Random.Range(0, _musics.Count - 1)];
             _audioSource.Play();
         }

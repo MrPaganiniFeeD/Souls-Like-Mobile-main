@@ -32,17 +32,17 @@ public class BaseMoveModule : IMoveModule
     }
     public void MoveAlongACurveUsingCharacterController(Vector3 direction, float duration, float speed, AnimationCurve curve)
     {
-        _monoBehaviour.StopCoroutine(MoveOnCurve(duration, curve));
-        _monoBehaviour.StartCoroutine(MoveOnCurve(duration, curve));
+        _monoBehaviour.StopCoroutine(MoveOnCurve(direction ,duration, curve , speed));
+        _monoBehaviour.StartCoroutine(MoveOnCurve(direction, duration, curve, speed));
     }
     
     public void MoveAlongACurveUsingRigidbody(Vector3 direction, float duration, float speed, AnimationCurve curve)
     {
-        _monoBehaviour.StopCoroutine(MoveOnCurve(duration, curve));
-        _monoBehaviour.StartCoroutine(MoveOnCurve(duration, curve));
+        _monoBehaviour.StopCoroutine(MoveOnCurve(direction, duration, curve,speed));
+        _monoBehaviour.StartCoroutine(MoveOnCurve(direction, duration, curve, speed));
     }
 
-    private IEnumerator MoveOnCurve(float duration, AnimationCurve curve)
+    private IEnumerator MoveOnCurve(Vector3 direction, float duration, AnimationCurve curve, float speed)
     {
         float expiredSeconds = 0;
         float progress = 0;
@@ -53,8 +53,8 @@ public class BaseMoveModule : IMoveModule
         {
             expiredSeconds += Time.deltaTime;
             progress = expiredSeconds / duration;
-
-            var forward = _transform.forward * curve.Evaluate(progress);
+            
+            var forward = direction * (curve.Evaluate(progress) * speed);
             Vector3 target = startPosition + forward;
             _characterController.Move(target - positionWithoutExternalChanges);
             positionWithoutExternalChanges = target;
@@ -67,7 +67,10 @@ public class BaseMoveModule : IMoveModule
         _rigidbody.AddForce(direction, forceMode);
     }
 
-    public void Rotate(Vector3 direction)
+    public void Rotate(Vector3 direction) => 
+        _transform.forward = GetRotationVector(direction);
+
+    private Vector3 GetRotationVector(Vector3 direction)
     {
         Vector3 movementVector = Vector3.zero;
         if (direction.sqrMagnitude > Constants.Epsilon)
@@ -75,9 +78,9 @@ public class BaseMoveModule : IMoveModule
             movementVector = _camera.transform.TransformDirection(direction);
             movementVector.y = 0;
             movementVector.Normalize();
-
-            _transform.forward = movementVector;
         }
+
+        return movementVector;
     }
 
     public void Rotate(Transform target)
