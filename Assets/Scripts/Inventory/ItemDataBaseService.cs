@@ -24,19 +24,25 @@ public class ItemDataBaseService : ScriptableObject, ISerializationCallbackRecei
     public ItemInfo GetItem(int id) => 
         _allItemsWithId[id];
 
-    public void Debug()
+    public T GetItem<T>(string name) where T : ItemInfo
     {
-        foreach (var item in _allItemsWithId)
+        for (var i = 0; i < Items.Length; i++)
         {
-            UnityEngine.Debug.Log(item.Value);
+            var item = _allItemsWithId[i];
+            if(item.Name == name && item is T info)
+            {
+                return info;
+            }
         }
+
+        return null;
     }
+    
 }
 
 public interface IItemDataBaseService : IService
 {
     
     ItemInfo GetItem(int id);
-
-    void Debug();
+    T GetItem<T>(string name) where T : ItemInfo;
 }

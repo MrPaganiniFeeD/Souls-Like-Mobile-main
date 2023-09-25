@@ -22,9 +22,8 @@ namespace UI.Bars
 
         protected void UpdateValue()
         {
+            Debug.Log("Update Value");
             _slider.value = Stat.Value;
         }
-        private void OnDestroy() => 
-            Stat.StateChanged -= UpdateValue;
     }
 }

@@ -11,11 +11,11 @@ namespace Inventory.InventoryWithSlots.Equipped
         public event Action<WeaponItem, LocationWeaponInHandType> WeaponEquip;
         public event Action<LocationWeaponInHandType> WeaponUnequip;
         
-        public List<IEquippedSlot<EquippedItem>> Slots { get; private set; }
-        public WeaponSlot<WeaponItem> WeaponSlot => _weaponSlot;
+        public List<IEquippedSlot> Slots { get; private set; }
+        public WeaponSlot WeaponSlot => _weaponSlot;
 
         private IFabricSlot _fabricSlot;
-        private WeaponSlot<WeaponItem> _weaponSlot;
+        private WeaponSlot _weaponSlot;
 
         public InventoryEquipped(IFabricSlot fabricSlot)
         {

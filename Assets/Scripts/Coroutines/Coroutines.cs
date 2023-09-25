@@ -6,10 +6,13 @@ using UnityEngine;
 
 public sealed class Coroutines : MonoBehaviour
 {
+    private static Coroutines m_instance;
+
     private static Coroutines _instance
     {
         get
         {
+            Debug.Log("Instatiate coroutines");
             if (m_instance == null)
             {
                 var gameObject = new GameObject("[COROUTINE SERVICES]");
@@ -21,10 +24,9 @@ public sealed class Coroutines : MonoBehaviour
         }
     }
 
-    private static Coroutines m_instance;
-
     public static Coroutine StartCoroutines(IEnumerator enumerator)
     {
+        Debug.Log("StartCoroutines");
         return _instance.StartCoroutine(enumerator);
     }
 

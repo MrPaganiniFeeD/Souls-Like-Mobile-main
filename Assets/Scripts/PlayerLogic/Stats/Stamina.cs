@@ -32,7 +32,7 @@ namespace DefaultNamespace.Stats
                 
                 if(_regenStamina != null)
                     Coroutines.StopCoroutines(_regenStamina);
-                    
+                
                 _regenStamina = Coroutines.StartCoroutines(RegenStamina());
                 return true;
             }

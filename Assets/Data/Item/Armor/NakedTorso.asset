@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e22ee1f6674884a76e2fe8f7ebe810, type: 3}
+  m_Name: NakedTorso
+  m_EditorClassIdentifier: 
+  _name: Naked Torso
+  _discription: 
+  _maxItemsInInventorySlot: 0
+  _icon: {fileID: 0}
+  _pefab: {fileID: 0}
+  _type: 3
+  _itemBuffStats:
+    _healthBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _damageBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _staminaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _manaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _intelligenceBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _protectionBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _dexterityBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _healthPercent: 0
+    _damagePercent: 0
+    _staminaPercent: 0
+    _manaPercent: 0
+    _intelligencePercent: 0
+    _protectionPercent: 0
+    _dectertityPercent: 0
+  _modelInfo:
+    _isNacktModelUnload: 0
+    _modelsName:
+    - Chr_Torso_Male_00
+    - Chr_ArmLowerRight_Male_00
+    - Chr_ArmLowerLeft_Male_00
+    - Chr_ArmUpperRight_Male_00
+    - Chr_ArmUpperLeft_Male_00
+    - Chr_HandRight_Male_00
+    - Chr_HandLeft_Male_00
+    - Chr_Hips_Male_00
+    _modelInHand: 0
+  RolloverAudioClip: {fileID: 8300000, guid: a7992d02c0bcce94996953a67cceec98, type: 3}

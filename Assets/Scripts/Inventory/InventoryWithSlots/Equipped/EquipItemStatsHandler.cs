@@ -20,7 +20,7 @@ namespace Inventory.InventoryWithSlots.Equipped
         {
             foreach (IInventorySlot inventorySlot in _inventory.Slots)
             {
-                IEquippedSlot<EquippedItem> slot = (IEquippedSlot<EquippedItem>) inventorySlot;
+                IEquippedSlot slot = (IEquippedSlot) inventorySlot;
                 //slot.ItemEquipped += OnEquippedItem;
                 //slot.ItemUnequipped += OnUnequippedItem;
             }

@@ -4,7 +4,7 @@ using Inventory.Item.EquippedItem.Weapon;
 using PlayerLogic.Stats;
 using UnityEngine;
 
-public class WeaponSlot<T> : IWeaponSlot<T>, IDisposable, IWeaponSlotStateMachine where T : WeaponItem
+public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine 
 {
     public event Action<IEquippedItemInfo> ItemEquipped;
     public event Action<IEquippedItemInfo> ItemUnequipped;
@@ -96,7 +96,7 @@ public class WeaponSlot<T> : IWeaponSlot<T>, IDisposable, IWeaponSlotStateMachin
         state.Enter(leftHandWeapon, rightHandWeapon, twoHand);
     }
 
-    public WeaponSlot<T> SetFistWeapon()
+    public WeaponSlot SetFistWeapon()
     {
         Debug.Log("SetFistWeapon");
         Enter<ArmedTwoHandState>(null,

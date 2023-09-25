@@ -1,6 +1,7 @@
 using Infrastructure.Services;
 using PlayerLogic.States.State;
 using PlayerLogic.States.StateMachine;
+using PlayerLogic.Stats;
 
 namespace PlayerLogic.States.Transition
 {
@@ -8,11 +9,15 @@ namespace PlayerLogic.States.Transition
     {
         public PlayerStateMachine PlayerStateMachine { get; }
         private readonly IInputService _inputService;
+        private readonly PlayerStats _playerStats;
 
-        public AttackTransition(PlayerStateMachine playerStateMachine, IInputService inputService)
+        public AttackTransition(PlayerStateMachine playerStateMachine,
+            IInputService inputService,
+            PlayerStats playerStats)
         {
             PlayerStateMachine = playerStateMachine;
             _inputService = inputService;
+            _playerStats = playerStats;
         }
 
         public void Enter()

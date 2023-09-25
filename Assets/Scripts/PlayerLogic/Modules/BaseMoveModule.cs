@@ -67,8 +67,11 @@ public class BaseMoveModule : IMoveModule
         _rigidbody.AddForce(direction, forceMode);
     }
 
-    public void Rotate(Vector3 direction) => 
-        _transform.forward = GetRotationVector(direction);
+    public void Rotate(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
+            _transform.forward = GetRotationVector(direction);
+    }
 
     private Vector3 GetRotationVector(Vector3 direction)
     {

@@ -13,7 +13,6 @@ namespace PlayerLogic.States.State
     {
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerStateAnimator _stateAnimator;
-        private readonly PlayerStats _playerStats;
         private readonly IInputService _inputService;
         private readonly IMoveModule _moveModule;
         private readonly RollStateData _rollStateData;
@@ -25,7 +24,6 @@ namespace PlayerLogic.States.State
         public RollState(List<ITransition> transitions,
             PlayerStateMachine stateMachine,
             PlayerStateAnimator stateAnimator,
-            PlayerStats playerStats,
             IInputService inputService,
             IMoveModule moveModule,
             RollStateData rollStateData,
@@ -33,7 +31,6 @@ namespace PlayerLogic.States.State
         {
             _stateMachine = stateMachine;
             _stateAnimator = stateAnimator;
-            _playerStats = playerStats;
             _inputService = inputService;
             _moveModule = moveModule;
             _rollStateData = rollStateData;
@@ -49,8 +46,6 @@ namespace PlayerLogic.States.State
         {
             base.Enter();
             _stateAnimator.ExitState += TransitionToIdle;
-            _playerStats.Stamina.Value -= _rollStateData.CostTransition;
-            
             Vector3 direction = _inputService.Axis;
             if (direction == Vector3.zero)
             {

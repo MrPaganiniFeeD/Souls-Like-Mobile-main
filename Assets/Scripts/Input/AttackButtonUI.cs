@@ -6,7 +6,7 @@ using Zenject;
 
 public class AttackButtonUI : MonoBehaviour
 {
-    private WeaponSlot<WeaponItem> _weaponSlot;
+    private WeaponSlot _weaponSlot;
 
     [SerializeField] private Button _leftHandButton;
     [SerializeField] private Button _rightHandButton;

@@ -1,18 +1,44 @@
+using System;
 using System.Collections.Generic;
+using Infrastructure.Services.Inventory;
+using Inventory.InventoryWithSlots.Equipped;
 using UnityEngine;
+using Zenject;
 
 namespace PlayerLogic.ItemModelView
 {
-    public class EquipModel : MonoBehaviour
+    public class EquipModel : MonoBehaviour, IDisposable
     {
         [SerializeField] private BootsModelChanger _bootsModelChanger; 
         [SerializeField] private HamletModelChanger _hamletModelChanger;
         [SerializeField] private ArmorModelChanger _armorModelChanger;
-        
-        
+        private InventoryEquipped _inventory;
 
-        private List<IInventorySlot> _equippedSlots;
+        [Inject]
+        public void Construct(IInventoryService inventoryService)
+        {
+            _inventory = inventoryService.InventoryEquipped;
+        }
 
+        private void Start()
+        {
+            AllItemEquip();
+            foreach (var slot in _inventory.Slots)
+            {
+                slot.ItemEquipped += Equip;
+                slot.ItemUnequipped += UnEquip;
+            }
+        }
+
+        private void AllItemEquip()
+        {
+            
+            foreach (var var in _inventory.Slots)
+            {
+                if (var.Item != null)
+                    Equip(var.Item.Info);
+            }
+        }
 
         private void Equip(IEquippedItemInfo itemInfo)
         {
@@ -48,6 +74,13 @@ namespace PlayerLogic.ItemModelView
         }
 
 
-        
+        public void Dispose()
+        {
+            foreach (var slot in _inventory.Slots)
+            {
+                slot.ItemEquipped -= Equip;
+                slot.ItemUnequipped -= UnEquip;
+            }
+        }
     }
 }

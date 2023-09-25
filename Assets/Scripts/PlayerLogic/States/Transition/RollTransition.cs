@@ -38,7 +38,7 @@ namespace PlayerLogic.States.Transition
 
         private void TryTransition()
         {
-            if (_playerStats.Stamina.Value - _rollStateData.CostTransition > 0)
+            if (_playerStats.Stamina.TryUse(_rollStateData.CostTransition))
                 _stateMachine.Enter<RollState>();
         }
     }

@@ -12,7 +12,7 @@ namespace PlayerLogic.Weapon
         [SerializeField] private InstallPrefabInHand _rightHand;
         [SerializeField] private InstallPrefabInHand _dualHand;
 
-        private WeaponSlot<WeaponItem> _weaponSlot;
+        private WeaponSlot _weaponSlot;
 
         [Inject]
         public void Construct(IInventoryService inventoryService)

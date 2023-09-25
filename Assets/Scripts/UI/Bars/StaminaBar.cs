@@ -1,4 +1,5 @@
 using Infrastructure.Services.PersistentProgress;
+using UnityEngine;
 using Zenject;
 
 namespace UI.Bars
@@ -12,5 +13,7 @@ namespace UI.Bars
             SetValue();
             Stat.StateChanged += UpdateValue;
         }
+        private void OnDestroy() => 
+            Stat.StateChanged -= UpdateValue;
     }
 }

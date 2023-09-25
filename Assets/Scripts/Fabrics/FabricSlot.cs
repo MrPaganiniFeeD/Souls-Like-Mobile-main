@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using Inventory.InventoryWithSlots.Equipped;
 using PlayerLogic.Stats;
+using UnityEngine;
 
 namespace Fabrics
 {
     public class FabricSlot : IFabricSlot
     {
-        public WeaponSlot<WeaponItem> WeaponSlot => _weaponSlot;
+        public WeaponSlot WeaponSlot => _weaponSlot;
         
         private readonly PlayerStats _playerStats;
         private readonly IItemDataBaseService _itemDataBaseService;
@@ -14,7 +16,7 @@ namespace Fabrics
         private readonly WeaponItem _rightUnarmed;
         private readonly WeaponItem _twoHandUnarmed;
         
-        private WeaponSlot<WeaponItem> _weaponSlot;
+        private WeaponSlot _weaponSlot;
 
 
         public FabricSlot(PlayerStats playerStats,
@@ -31,21 +33,23 @@ namespace Fabrics
         public IInventorySlot CreateInventorySlot(Item item) =>
             new InventorySlot(item);
 
-        public List<IEquippedSlot<EquippedItem>> CreateEquippedSlot()
+        public List<IEquippedSlot> CreateEquippedSlot()
         {
-            return new List<IEquippedSlot<EquippedItem>>
+            return new List<IEquippedSlot>
             {
-                new EquippedSlot<ArmorItem>(EquippedItemType.Armor),
-                new EquippedSlot<BootsItem>(EquippedItemType.Boots),
-                new EquippedSlot<HamletItem>(EquippedItemType.Hamlet),
-                new EquippedSlot<RingItem>(EquippedItemType.Ring),
+                new EquippedSlot(EquippedItemType.Armor,
+                    _itemDataBaseService.GetItem<EquippedInfo>("Naked Torso").GetCreationItem()),
+                new EquippedSlot(EquippedItemType.Boots,
+                    _itemDataBaseService.GetItem<EquippedInfo>("Bare Legs").GetCreationItem()),
+                new EquippedSlot(EquippedItemType.Hamlet,
+                    _itemDataBaseService.GetItem<EquippedInfo>("Bare Head").GetCreationItem()),
                 GetWeaponSlot()
             };
         }
 
-        private WeaponSlot<WeaponItem> GetWeaponSlot()
+        private WeaponSlot GetWeaponSlot()
         {
-            _weaponSlot = new WeaponSlot<WeaponItem>(_playerStats,
+            _weaponSlot = new WeaponSlot(_playerStats,
                 GetWeapon(0),
                 GetWeapon(1),
                 GetWeapon(2)).SetFistWeapon();

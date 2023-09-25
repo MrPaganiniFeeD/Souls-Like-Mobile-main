@@ -1,6 +1,7 @@
 using Fabrics;
 using Infrastructure.Services;
 using Infrastructure.Services.Inventory;
+using Infrastructure.Services.PersistentProgress;
 using PlayerLogic.Animation;
 using PlayerLogic.States;
 using PlayerLogic.States.State;
@@ -31,12 +32,12 @@ public class PlayerFabrics : MonoBehaviour
 
     [Inject]
     public void Construct(IInventoryService inventoryService, 
-        IInputService inputService,
-        PlayerStats playerStats)
+        IInputService inputService, 
+        IPersistentProgressService progressService)
     {
         _inventoryService = inventoryService;
         _inputService = inputService;
-        _playerStats = playerStats;
+        _playerStats = progressService.PlayerProgress.playerStateData.PlayerStats;
         _playerCamera = Camera.main.GetComponentInParent<PlayerCamera>();
     }
 

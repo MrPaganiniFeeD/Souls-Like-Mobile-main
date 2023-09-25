@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d620dc4822b4440b4d62fda359bd308, type: 3}
+  m_Name: BareHead
+  m_EditorClassIdentifier: 
+  _name: Bare Head
+  _discription: 
+  _maxItemsInInventorySlot: 0
+  _icon: {fileID: 0}
+  _pefab: {fileID: 0}
+  _type: 4
+  _itemBuffStats:
+    _healthBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _damageBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _staminaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _manaBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _intelligenceBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _protectionBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _dexterityBuff:
+      _name: 
+      _currentValue: 0
+      _baseValue: 0
+    _healthPercent: 0
+    _damagePercent: 0
+    _staminaPercent: 0
+    _manaPercent: 0
+    _intelligencePercent: 0
+    _protectionPercent: 0
+    _dectertityPercent: 0
+  _modelInfo:
+    _isNacktModelUnload: 0
+    _modelsName:
+    - Chr_Head_Male_03
+    - Chr_Eyebrow_Male_07
+    _modelInHand: 0

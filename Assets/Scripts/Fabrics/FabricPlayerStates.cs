@@ -21,8 +21,8 @@ namespace Fabrics
         private readonly IInventoryService _inventoryService;
 
         private PlayerStats _playerStats;
-        private IWeaponSlot<WeaponItem> _leftWeaponSlot;
-        private IWeaponSlot<WeaponItem> _rightWeaponSlot;
+        private IWeaponSlot _leftWeaponSlot;
+        private IWeaponSlot _rightWeaponSlot;
         private Player _player;
         private readonly PlayerStateMachine _playerStateMachine;
         private readonly PlayerStateAnimator _animator;
@@ -89,7 +89,6 @@ namespace Fabrics
                 [typeof(RollState)] = new RollState(GetTransition(TypePlayerState.Roll),
                     _playerStateMachine,
                     _animator,
-                    _playerStats,
                     _inputService,
                     _baseMove,
                     _rollStateData,

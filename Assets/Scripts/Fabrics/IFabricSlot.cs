@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Inventory.InventoryWithSlots.Equipped;
 
 namespace Fabrics
 {
     public interface IFabricSlot
     {
-        WeaponSlot<WeaponItem> WeaponSlot { get; }
+        WeaponSlot WeaponSlot { get; }
 
         IInventorySlot CreateInventorySlot();
         IInventorySlot CreateInventorySlot(Item item);
         
-        List<IEquippedSlot<EquippedItem>> CreateEquippedSlot();
+        List<IEquippedSlot> CreateEquippedSlot();
     }
 }

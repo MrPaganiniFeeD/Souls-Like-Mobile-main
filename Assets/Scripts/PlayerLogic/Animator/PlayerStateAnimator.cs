@@ -22,7 +22,7 @@ namespace PlayerLogic.Animation
 
 
         private Animator _animator;
-        private WeaponSlot<WeaponItem> _weaponSlot;
+        private WeaponSlot _weaponSlot;
         private bool _isLockOn = true;
 
         [SerializeField] private AudioClip _step;
