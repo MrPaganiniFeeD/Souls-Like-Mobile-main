@@ -8,7 +8,7 @@ namespace PlayerLogic.Stats
 {
     public class ClassStats : IStatsProvider
     {
-        private readonly ClassType _classType;
+        private readonly ClassType _classType;  
 
         public ClassStats(ClassType classType)
         {
@@ -24,7 +24,7 @@ namespace PlayerLogic.Stats
                     return new PlayerStats(
                         new PlayerStat("Health", 10, 10),
                         new PlayerStat("Damage", 5),
-                        new Stamina("Stamina", 6, 6, 0.1f, 2),
+                        new Stamina("Stamina", 10, 10, 0.1f, 2),
                         new Mana("Mana", 2, 2),
                         new PlayerStat("Intelligence", 1),
                         new PlayerStat("Protection", 4),

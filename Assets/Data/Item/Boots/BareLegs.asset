@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bare Legs
   _discription: 
-  _maxItemsInInventorySlot: 0
+  _maxItemsInInventorySlot: 1
   _icon: {fileID: 0}
   _pefab: {fileID: 0}
   _type: 2

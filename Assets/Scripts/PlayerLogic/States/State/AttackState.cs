@@ -184,7 +184,7 @@ public class AttackState : PlayerState, IAttackState, IDisposable
         if (_playerCamera.IsLockedTarget == false)
             _moveModule.Rotate(_inputService.Axis);
         else
-            _moveModule.Rotate(_playerCamera.CurrentTarget);
+            _moveModule.Rotate(_playerCamera.CurrentTarget.LockOnTransform);
     }
 
     private void EnableWeaponCollider()

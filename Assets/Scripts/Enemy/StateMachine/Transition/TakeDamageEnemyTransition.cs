@@ -1,4 +1,5 @@
 ﻿using PlayerLogic.States.Transition;
+using UnityEngine;
 
 public class TakeDamageEnemyTransition : ITransition
 {
@@ -23,6 +24,7 @@ public class TakeDamageEnemyTransition : ITransition
     private void Transit(int damage)
     {
         var takeDamagePayloaded = new TakeDamageStatePayloaded(damage);
+        Debug.Log("Transition");
         _enemyStateMachine.Enter<TakeDamageEnemyState, ITakeDamageStatePayloaded>(takeDamagePayloaded);
     }
 }

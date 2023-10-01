@@ -13,8 +13,7 @@ namespace Fabrics
     {
         private IInputService _inputService;
         private readonly PlayerStateMachine _playerStateMachine;
-    
-        private IDamageDetection _damageDetection;
+        
         private PlayerStats _playerStats;
         private RollStateData _rollingData;
 

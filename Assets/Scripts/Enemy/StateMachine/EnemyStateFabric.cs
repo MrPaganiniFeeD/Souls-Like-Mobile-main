@@ -97,7 +97,8 @@ internal class EnemyStateFabric : MonoBehaviour
                             _enemyStateAnimator,
                             _health,
                             GetComponent<AudioSource>(),
-                            _ragDollOperations));
+                            _ragDollOperations,
+                            GetComponentInChildren<Lockable>()));
                     break;
             }
         }

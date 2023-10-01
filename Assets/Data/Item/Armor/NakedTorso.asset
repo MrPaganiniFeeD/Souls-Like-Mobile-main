@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Naked Torso
   _discription: 
-  _maxItemsInInventorySlot: 0
+  _maxItemsInInventorySlot: 1
   _icon: {fileID: 0}
   _pefab: {fileID: 0}
   _type: 3
@@ -55,7 +55,7 @@ MonoBehaviour:
     _protectionPercent: 0
     _dectertityPercent: 0
   _modelInfo:
-    _isNacktModelUnload: 0
+    _isNacktModelUnload: 1
     _modelsName:
     - Chr_Torso_Male_00
     - Chr_ArmLowerRight_Male_00

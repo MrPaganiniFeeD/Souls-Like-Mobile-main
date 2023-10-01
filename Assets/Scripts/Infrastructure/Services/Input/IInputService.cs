@@ -25,5 +25,7 @@ namespace Infrastructure.Services
         Vector2 Axis { get; }
 
         bool IsLeftHandAttackButtonUp();
+
+        public void SetAimArea(AimArea aimArea);
     }
 }

@@ -6,7 +6,7 @@ using PlayerLogic.Animation;
 using UnityEngine;
 public class LockOnCameraState : ICameraState, IDisposable
 {
-    public event Action<Transform> LockedTarget;
+    public event Action<Lockable> LockedTarget;
     public event Action UnlockedTarget;
 
     private IInputService _inputService;
@@ -21,7 +21,7 @@ public class LockOnCameraState : ICameraState, IDisposable
     private int _viewableAngel;
     
     private List<Lockable> _availableTargets = new List<Lockable>();
-    private Transform _currentLockOnTarget;
+    private Lockable _currentLockOnTarget;
     private Transform _cameraPivotTransform;
     private readonly Transform _playerTransform;
     private CameraFollow _cameraFollow;
@@ -107,7 +107,7 @@ public class LockOnCameraState : ICameraState, IDisposable
     }
     private void LockOnLeftTarget()
     {
-        if (TryFindLockOnLeftTarget(out Transform target))
+        if (TryFindLockOnLeftTarget(out Lockable target))
         {
             _camera.SetTarget(target);
             LockedTarget?.Invoke(target);
@@ -116,17 +116,17 @@ public class LockOnCameraState : ICameraState, IDisposable
 
     private void LockOnRightTarget()
     {
-        if (TryFindLockOnRightTarget(out Transform target))
+        if (TryFindLockOnRightTarget(out Lockable target))
         {
             _camera.SetTarget(target);
             LockedTarget?.Invoke(target);
         }
     }
 
-    private bool TryFindLockOnLeftTarget(out Transform target)
+    private bool TryFindLockOnLeftTarget(out Lockable target)
     {
         float shortestDistanceOnLeftTarget = Mathf.Infinity;
-        Transform leftLockOnTarget = null;
+        Lockable leftLockOnTarget = null;
         foreach (Lockable availableTarget in _availableTargets)
         {
             Vector3 relativePlayerPosition = _selfTransform.InverseTransformPoint(availableTarget.transform.position);
@@ -136,10 +136,12 @@ public class LockOnCameraState : ICameraState, IDisposable
             
             distanceFromLeftTarget = GetDistanceFromLeftTarget(relativePlayerPosition, distanceFromLeftTarget, availableTarget);
 
-            if (relativePlayerPosition.x < 0.00 && distanceFromLeftTarget < shortestDistanceOnLeftTarget)
+            if (relativePlayerPosition.x < 0.00
+                && distanceFromLeftTarget < shortestDistanceOnLeftTarget
+                && availableTarget.Enable)
             {
                 shortestDistanceOnLeftTarget = distanceFromLeftTarget;
-                leftLockOnTarget = availableTarget.LockOnTransform;
+                leftLockOnTarget = availableTarget;
             }
         }
 
@@ -153,10 +155,10 @@ public class LockOnCameraState : ICameraState, IDisposable
         return true;
 
     }
-    private bool TryFindLockOnRightTarget(out Transform target)
+    private bool TryFindLockOnRightTarget(out Lockable target)
     {
         float shortestDistanceOnRightTarget = Mathf.Infinity;
-        Transform rightLockTarget = null;
+        Lockable rightLockTarget = null;
         foreach (Lockable availableTarget in _availableTargets)
         {
             Vector3 relativePlayerPosition = _selfTransform.InverseTransformPoint(availableTarget.transform.position);
@@ -166,10 +168,12 @@ public class LockOnCameraState : ICameraState, IDisposable
             
             distanceFromRightTarget = GetDistanceFromRightTarget(relativePlayerPosition, distanceFromRightTarget, availableTarget);
 
-            if (relativePlayerPosition.x > 0.00 && distanceFromRightTarget < shortestDistanceOnRightTarget)
+            if (relativePlayerPosition.x > 0.00 
+                && distanceFromRightTarget < shortestDistanceOnRightTarget
+                && availableTarget.Enable)
             {
                 shortestDistanceOnRightTarget = distanceFromRightTarget;
-                rightLockTarget = availableTarget.LockOnTransform;
+                rightLockTarget = availableTarget;
             }
         }
 
@@ -177,7 +181,7 @@ public class LockOnCameraState : ICameraState, IDisposable
         {
             target = null;
             return false;
-        }
+            }
         
         target = rightLockTarget;
         return true;
@@ -189,7 +193,7 @@ public class LockOnCameraState : ICameraState, IDisposable
     {
         if (relativePlayerPosition.x < 0.00)
             distanceFromLeftTarget =
-                Vector3.Distance(_currentLockOnTarget.position, availableTarget.transform.position);
+                Vector3.Distance(_currentLockOnTarget.LockOnTransform.position, availableTarget.transform.position);
 
         return distanceFromLeftTarget;
     }
@@ -197,8 +201,8 @@ public class LockOnCameraState : ICameraState, IDisposable
         Lockable availableTarget)
     {
         if (relativePlayerPosition.x > 0.00)
-            distanceFromRightTarget =
-                Vector3.Distance(_currentLockOnTarget.position, availableTarget.transform.position);
+            distanceFromRightTarget = 
+                Vector3.Distance(_currentLockOnTarget.LockOnTransform.position, availableTarget.transform.position);
 
         return distanceFromRightTarget;
     }
@@ -209,17 +213,22 @@ public class LockOnCameraState : ICameraState, IDisposable
     }
     private void LockOn()
     {
+        if (_currentLockOnTarget.Enable == false) 
+            _camera.SwitchState<DefaultCameraState>();
+
+
+
         _currentLockOnTarget = _camera.CurrentTarget;
         float velocity = 0; 
         
-        Vector3 direction = _currentLockOnTarget.position - _selfTransform.position;
+        Vector3 direction = _currentLockOnTarget.LockOnTransform.position - _selfTransform.position;
         direction.Normalize();
         direction.y = 0;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         _selfTransform.rotation = targetRotation;
 
-        direction = _currentLockOnTarget.position - _cameraPivotTransform.position;
+        direction = _currentLockOnTarget.LockOnTransform.position - _cameraPivotTransform.position;
         direction.Normalize();
 
         targetRotation = Quaternion.LookRotation(direction);
@@ -263,6 +272,7 @@ public class LockOnCameraState : ICameraState, IDisposable
                     
                 }
             }
+            
         }
 
         if (_availableTargets.Count == 0)
@@ -274,17 +284,17 @@ public class LockOnCameraState : ICameraState, IDisposable
 
     }
 
-    private Transform GetAvailableTarget()
+    private Lockable GetAvailableTarget()
     {
         float shortestDistance = Mathf.Infinity;
-        Transform currentLockOnTarget = null;
+        Lockable currentLockOnTarget = null;
         foreach (var availableTarget in _availableTargets)
         {
             float distanceFromTarget = Vector3.Distance(_lockOnTransform.position, availableTarget.transform.position);
-            if (distanceFromTarget < shortestDistance)
+            if (distanceFromTarget < shortestDistance && availableTarget.Enable)
             {
                 shortestDistance = distanceFromTarget;
-                currentLockOnTarget =  availableTarget.LockOnTransform;
+                currentLockOnTarget =  availableTarget;
             }
         }
 

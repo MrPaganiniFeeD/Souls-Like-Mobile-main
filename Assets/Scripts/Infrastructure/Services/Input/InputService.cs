@@ -35,10 +35,12 @@ namespace Infrastructure.Services
         public bool IsLeftHandAttackButtonUp() =>
             SimpleInput.GetButtonUp(LeftHandAttack);
 
+        public abstract void SetAimArea(AimArea aimArea);
+
         protected bool IsRightHandAttackButtonUp() =>
             SimpleInput.GetButtonUp(RightHandAttack);
 
-        protected bool IsRolloverButtonUp() =>
+        protected bool IsRolloverButtonUp() => 
             SimpleInput.GetButtonUp(Rollover);
 
         protected bool IsLockOnButtonUp() =>

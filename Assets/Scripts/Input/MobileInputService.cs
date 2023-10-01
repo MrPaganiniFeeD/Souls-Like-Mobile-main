@@ -1,11 +1,13 @@
 ﻿using System;
 using Infrastructure.Services;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DefaultNamespace.UI.Input
 {
     public class MobileInputService : InputService
     {
+        private AimArea _aimArea;
         public override event Action LeftHandAttackButtonUp;
         public override event Action RightHandAttackButtonUp;
         public override event Action MainAttackButtonUp;
@@ -16,7 +18,7 @@ namespace DefaultNamespace.UI.Input
         public override event Action RightLockOnButtonUp;
 
         private Vector2 _currentAxis;
-        private float _sensitivity = 0.01f;
+        private float _sensitivity = 2f;
 
         public override Vector2 Axis
         {
@@ -30,6 +32,7 @@ namespace DefaultNamespace.UI.Input
             }
         }
 
+        
         public override void Update()
         {
             if(IsRolloverButtonUp())
@@ -62,10 +65,31 @@ namespace DefaultNamespace.UI.Input
 
             Axis = GetSimpleInputAxis();
 
-            MouseX = UnityEngine.Input.GetTouch(0).deltaPosition.x * _sensitivity;
-            MouseY = UnityEngine.Input.GetTouch(0).deltaPosition.y * _sensitivity;
+            if (_aimArea != null)
+            {
+                if (_aimArea.IsClicked)
+                {
+                    ChangePointerPosition(UnityEngine.Input.GetTouch(0).deltaPosition);
+                }
+                else
+                {
+                    ChangePointerPosition(Vector2.zero);    
+                }
+            }
+
         }
-        
+
+        public override void SetAimArea(AimArea aimArea)
+        {
+            _aimArea = aimArea;
+        }
+
+        private void ChangePointerPosition(Vector2 position)
+        {
+            MouseX = position.x * _sensitivity * Time.deltaTime;
+            MouseY = position.y * _sensitivity * Time.deltaTime;
+        }
+
         private bool IsLockOnClickButton() =>
             SimpleInput.GetButtonUp(LockOn);
 
@@ -78,5 +102,6 @@ namespace DefaultNamespace.UI.Input
 
         private static Vector2 GetSimpleInputAxis() =>
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
+
     }
 }

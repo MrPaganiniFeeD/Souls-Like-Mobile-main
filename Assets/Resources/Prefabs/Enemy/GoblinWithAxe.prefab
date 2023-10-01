@@ -4003,7 +4003,7 @@ MonoBehaviour:
     TypeEnemyTransitions: 
     EnemyStates: []
   - EnemyState: 5
-    TypeEnemyTransitions: 
+    TypeEnemyTransitions: 04000000
     EnemyStates: []
 --- !u!114 &4952280339263016657
 MonoBehaviour:

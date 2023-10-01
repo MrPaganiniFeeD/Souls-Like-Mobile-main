@@ -32,6 +32,7 @@ public class TakeDamageEnemyState : EnemyState, IEnemyState<ITakeDamageStatePayl
 
     public void Enter(ITakeDamageStatePayloaded payloaded)
     {
+        base.Enter();    
         if (_health.Value - payloaded.Damage > 0)
         {
             _health.Value -= payloaded.Damage;

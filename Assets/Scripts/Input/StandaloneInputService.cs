@@ -28,7 +28,9 @@ using UnityEngine;
                 _currentAxis = value;
             }
         }
-        
+
+        public override void SetAimArea(AimArea aimArea) { }
+
 
         public override void Update()
         {

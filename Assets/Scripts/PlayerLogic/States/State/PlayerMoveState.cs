@@ -135,7 +135,7 @@ namespace PlayerLogic.States.State
         private void RotateToTarget()
         {
             Vector3 rotationDirection = _moveDirection;
-            rotationDirection = _playerCamera.CurrentTarget.position - _transform.position;
+            rotationDirection = _playerCamera.CurrentTarget.LockOnTransform.position - _transform.position;
             rotationDirection.y = 0;
             rotationDirection.Normalize();
             Quaternion tr = Quaternion.LookRotation(rotationDirection); 
