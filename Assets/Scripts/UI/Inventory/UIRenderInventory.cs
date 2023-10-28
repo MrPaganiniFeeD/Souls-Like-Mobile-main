@@ -17,7 +17,7 @@ public class UIRenderInventory : IDisposable
     {
         foreach (var slot in _uiSlots)
         {
-            slot.Refresh();
+          //  slot.Refresh();
         }
     }
     private void SetupInventoryUI(IInventory inventory)

@@ -1,5 +1,5 @@
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 using Zenject;
 
@@ -22,9 +22,8 @@ namespace UI.Stats
 
         private void Awake()
         {
-            _uiStat = GetComponentsInChildren<UIStat>();
-            UpdateStatName();
-        
+            //_uiStat = GetComponentsInChildren<UIStat>();
+            //UpdateStatName();
         }
 
         private void Start()
@@ -34,18 +33,16 @@ namespace UI.Stats
                 _playerStats.Stamina,
                 _playerStats.Mana,
                 _playerStats.Intelligence,
-                _playerStats.Protection,
-                _playerStats.Dexterity);
-       
+                _playerStats.Protection);
         }
 
-        public void SetStats(params PlayerLogic.Stats.Stat[] playerStats)
+        public void SetStats(params Stat[] playerStats)
         {
             _stats = playerStats;
             for (int i = 0; i < _stats.Length; i++)
             {
-                UpdateStatValue();
-                _stats[i].StateChanged += UpdateStatValue;
+                //UpdateStatValue();
+                //_stats[i].StateChanged += UpdateStatValue;
                 _uiStat[i].SetStat(_stats[i]);
             }
         
@@ -54,10 +51,10 @@ namespace UI.Stats
                 Debug.Log("Not Enough Stat display");
                 return;
             }
-            for (int i = 0; i < _uiStat.Length; i++)
+            /*for (int i = 0; i < _uiStat.Length; i++)
             {
                 _uiStat[i].gameObject.SetActive(i < _stats.Length);
-            }
+            }*/
         }
         private void UpdateStatValue()
         {

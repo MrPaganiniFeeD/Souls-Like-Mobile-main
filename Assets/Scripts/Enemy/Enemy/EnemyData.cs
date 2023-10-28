@@ -8,6 +8,7 @@ public class EnemyData : ScriptableObject
 {
     public string Name;
     public int Health;
+    public int Damage;
     public MonsterTypeId MonsterTypeId;
     public List<EnemyAttackData> AttackDatas;
 

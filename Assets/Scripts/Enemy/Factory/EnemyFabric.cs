@@ -1,7 +1,8 @@
 using DefaultNamespace.Enemy.Factory;
+using Hero;
 using Infrastructure.AssetsManagement;
 using Infrastructure.Factory;
-using PlayerLogic.States;
+using Hero.States;
 using UI.Bars;
 using UnityEngine;
 

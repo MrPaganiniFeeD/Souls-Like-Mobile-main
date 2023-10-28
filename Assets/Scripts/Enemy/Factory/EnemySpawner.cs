@@ -1,10 +1,11 @@
 ﻿using Data;
 using DefaultNamespace.Enemy.Factory;
 using DefaultNamespace.Logic;
+using Hero;
 using Infrastructure.AssetsManagement;
 using Infrastructure.Factory;
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.States;
+using Hero.States;
 using UnityEngine;
 using Zenject;
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,6 +17,12 @@ namespace UI.Inventory
             _rectTransform = GetComponent<RectTransform>();
             _canvasGroup = GetComponent<CanvasGroup>();
         }
+
+        private void Update()
+        {
+            
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             Transform slotTransform = _rectTransform.parent;
@@ -30,7 +37,7 @@ namespace UI.Inventory
             transform.position = Input.mousePosition;
             _canvasGroup.blocksRaycasts = false;
         }
-
+        
         public void OnEndDrag(PointerEventData eventData)
         {
 

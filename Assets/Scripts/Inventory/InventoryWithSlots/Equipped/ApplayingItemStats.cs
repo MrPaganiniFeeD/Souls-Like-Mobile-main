@@ -1,4 +1,4 @@
-using PlayerLogic.Stats;
+using Hero.Stats;
 
 public class ApplyingItemStats : IApplyingItemStats
 {
@@ -17,8 +17,6 @@ public class ApplyingItemStats : IApplyingItemStats
         AddBonus(_playerStats.Mana,         StatModifierType.Flat, itemBuffStats.Mana.Value, source);
         AddBonus(_playerStats.Intelligence, StatModifierType.Flat, itemBuffStats.Intelligence.Value, source);
         AddBonus(_playerStats.Protection,   StatModifierType.Flat, itemBuffStats.Protection.Value, source);
-        AddBonus(_playerStats.Dexterity,    StatModifierType.Flat, itemBuffStats.Dexterity.Value, source);
-        
         
         AddMaxValueBonus(_playerStats.Health, StatModifierType.PercentMult, itemBuffStats.HealthPercent, source);
         AddBonus(_playerStats.Damage,         StatModifierType.PercentMult, itemBuffStats.DamagePercent, source);
@@ -26,7 +24,8 @@ public class ApplyingItemStats : IApplyingItemStats
         AddBonus(_playerStats.Mana,           StatModifierType.PercentMult, itemBuffStats.ManaPercent, source);
         AddBonus(_playerStats.Intelligence,   StatModifierType.PercentMult, itemBuffStats.IntelligencePercent, source);
         AddBonus(_playerStats.Protection,     StatModifierType.PercentMult, itemBuffStats.ProtectionPercent, source);
-        AddBonus(_playerStats.Dexterity,      StatModifierType.PercentMult, itemBuffStats.DexterityPercent,source);
+
+        
         
         _playerStats.ShowInfoStats();
     }

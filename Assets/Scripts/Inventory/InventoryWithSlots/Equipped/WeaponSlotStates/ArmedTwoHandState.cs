@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ArmedTwoHandState : WeaponSlotState
 {
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
+    public override event Action<WeaponEventInfo> WeaponEquipped;
 
 
     public ArmedTwoHandState(IWeaponSlotStateMachine stateMachine,
@@ -13,7 +12,7 @@ public class ArmedTwoHandState : WeaponSlotState
         WeaponItem unarmedLeft,
         WeaponItem unarmedRight,
         WeaponItem unarmedTwoHand)
-        : base(stateMachine, applyingItemStats, unarmedLeft, unarmedRight, unarmedTwoHand)
+        : base(stateMachine, applyingItemStats, unarmedLeft, unarmedRight, unarmedTwoHand)  
     {
     }
 
@@ -22,14 +21,14 @@ public class ArmedTwoHandState : WeaponSlotState
         WeaponItem twoHandWeapon)
     {
         base.Enter(leftHandWeaponItem, rightHandWeapon, twoHandWeapon);
-        WeaponEquipped?.Invoke(twoHandWeapon, LocationWeaponInHandType.TwoHand);
+        WeaponEquipped?.Invoke(new WeaponEventInfo(twoHandWeapon, LocationWeaponInHandType.TwoHand, false));
         TwoHandWeapon = twoHandWeapon;
     }
 
     public override void Unequip(LocationWeaponInHandType locationWeaponInHandType)
     {
-        ClearStats(TwoHandWeapon.Info);
-        WeaponUnequipped?.Invoke(TwoHandWeapon, LocationWeaponInHandType.TwoHand);
+        Debug.Log("Unequip " + TwoHandWeapon.Info.Name);
+        ClearSlot(new WeaponEventInfo(TwoHandWeapon, LocationWeaponInHandType.TwoHand, false));
         StateMachine.Enter<UnarmedState>(LeftHandWeapon,
             RightHandWeapon,
             TwoHandWeapon);

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Cam;
 using Infrastructure.Services;
-using PlayerLogic.Animation;
 using UnityEngine;
 public class LockOnCameraState : ICameraState, IDisposable
 {
@@ -60,17 +59,24 @@ public class LockOnCameraState : ICameraState, IDisposable
         _inputService.RightLockOnButtonUp += LockOnRightTarget;
         if (TryFindLockOnEnemy())
         {
-            _currentLockOnTarget = GetAvailableTarget();
-            LockedTarget?.Invoke(_currentLockOnTarget);
-            _camera.SetTarget(_currentLockOnTarget);
-            _playerStateAnimator.SetLockOnCamera(true);
-            SetCameraHeight(_lockedPivotPosition);
+            if(GetAvailableTarget(out _currentLockOnTarget))
+            {
+                LockedTarget?.Invoke(_currentLockOnTarget);
+                _camera.SetTarget(_currentLockOnTarget);
+                _playerStateAnimator.SetLockOnCamera(true);
+                SetCameraHeight(_lockedPivotPosition);
+            }
         }
         else
             _camera.SwitchState<DefaultCameraState>();
     }
 
-    public void FixedUpdate()
+    public void Enter(Quaternion rotation)
+    {
+        
+    }
+
+    public void Update()
     {
         _cameraFollow.Follow();
         LockOn();
@@ -181,7 +187,7 @@ public class LockOnCameraState : ICameraState, IDisposable
         {
             target = null;
             return false;
-            }
+        }
         
         target = rightLockTarget;
         return true;
@@ -213,8 +219,18 @@ public class LockOnCameraState : ICameraState, IDisposable
     }
     private void LockOn()
     {
-        if (_currentLockOnTarget.Enable == false) 
-            _camera.SwitchState<DefaultCameraState>();
+        if (_currentLockOnTarget != null && _currentLockOnTarget.Enable == false)
+        {
+            if(GetAvailableTarget(out Lockable turget))
+            {
+                _camera.SetTarget(turget);
+                LockedTarget?.Invoke(turget);
+            }
+            else
+            {
+                _camera.SwitchState<DefaultCameraState>();
+            }
+        }
 
 
 
@@ -232,9 +248,7 @@ public class LockOnCameraState : ICameraState, IDisposable
         direction.Normalize();
 
         targetRotation = Quaternion.LookRotation(direction);
-        Vector3 eulerAngel = targetRotation.eulerAngles;
-        eulerAngel.y = 0;
-        _cameraPivotTransform.localEulerAngles = eulerAngel;
+        _cameraPivotTransform.rotation = Quaternion.Slerp(_cameraPivotTransform.rotation, targetRotation, Time.deltaTime * 100);
     }
 
     private bool TryFindLockOnEnemy()
@@ -277,29 +291,29 @@ public class LockOnCameraState : ICameraState, IDisposable
 
         if (_availableTargets.Count == 0)
         {
-            _camera.SwitchState<DefaultCameraState>();
+            _camera.SwitchState<DefaultCameraState>(_cameraPivotTransform.rotation);
             return false;
         }
         return true;
 
     }
 
-    private Lockable GetAvailableTarget()
+    private bool GetAvailableTarget(out Lockable turget)
     {
         float shortestDistance = Mathf.Infinity;
-        Lockable currentLockOnTarget = null;
         foreach (var availableTarget in _availableTargets)
         {
             float distanceFromTarget = Vector3.Distance(_lockOnTransform.position, availableTarget.transform.position);
             if (distanceFromTarget < shortestDistance && availableTarget.Enable)
             {
                 shortestDistance = distanceFromTarget;
-                currentLockOnTarget =  availableTarget;
+                turget = availableTarget;
+                return true;
             }
         }
-
-        return currentLockOnTarget;
+        turget = null;
+        return false;
     }
     private void LockOnButtonHandler() => 
-        _camera.SwitchState<DefaultCameraState>();
+        _camera.SwitchState<DefaultCameraState>(_cameraPivotTransform.rotation);
 }

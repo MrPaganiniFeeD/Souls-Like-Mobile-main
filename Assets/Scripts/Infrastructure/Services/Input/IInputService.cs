@@ -8,7 +8,8 @@ namespace Infrastructure.Services
         event Action LeftHandAttackButtonUp;
         event Action RightHandAttackButtonUp;
         event Action MainAttackButtonUp;
-        event Action<Vector2> ChangeAxis;
+        event Action<Vector2> AxisChange;
+        event Action<Vector2> RotationInputChange;
         event Action RollButtonUp;
         event Action LockOnButtonUp;
         event Action LeftLockOnButtonUp;
@@ -26,6 +27,6 @@ namespace Infrastructure.Services
 
         bool IsLeftHandAttackButtonUp();
 
-        public void SetAimArea(AimArea aimArea);
+        public void SetRotationZone(RectTransform transformRotationZone);
     }
 }

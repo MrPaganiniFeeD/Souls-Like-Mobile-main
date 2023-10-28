@@ -7,6 +7,7 @@ namespace Infrastructure.AssetsManagement
     {
         GameObject Instantiate(string namePrefab);
         GameObject Instantiate(string namePrefab, Vector3 position);
+        GameObject Instantiate(string namePrefab, Quaternion quaternion, Vector3 position, Transform parent);
 
         T GetObjectForType<T>(string path) where T : Object;
 

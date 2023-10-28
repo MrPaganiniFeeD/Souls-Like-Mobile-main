@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UnarmedState : WeaponSlotState
 {
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
+    public override event Action<WeaponEventInfo> WeaponEquipped;
+    public override event Action<WeaponEventInfo> WeaponUnequipped;
 
     public UnarmedState(IWeaponSlotStateMachine stateMachine, 
         ApplyingItemStats applyingItemStats,
@@ -21,12 +21,14 @@ public class UnarmedState : WeaponSlotState
         WeaponItem twoHandWeapon)
     {
         base.Enter(leftHandWeaponItem, rightHandWeapon, twoHandWeapon);
-        TwoHandWeapon = twoHandWeapon;
-        Debug.Log(TwoHandWeapon);
-        WeaponEquipped?.Invoke(UnarmedTwoHand, LocationWeaponInHandType.TwoHand);
+        TwoHandWeapon = UnarmedTwoHand;
+        WeaponEquipped?.Invoke(new WeaponEventInfo(UnarmedTwoHand, LocationWeaponInHandType.LeftHand, true));
     }
 
 
-    public override void Unequip(LocationWeaponInHandType locationWeaponInHandType) => 
-        throw new NotImplementedException();
+    public override void Unequip(LocationWeaponInHandType locationWeaponInHandType)
+        => new NotImplementedException();
+
+    public override void Exit() => 
+        WeaponUnequipped?.Invoke(new WeaponEventInfo(TwoHandWeapon, LocationWeaponInHandType.TwoHand, true));
 }

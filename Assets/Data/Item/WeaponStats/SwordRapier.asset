@@ -15,36 +15,26 @@ MonoBehaviour:
   _name: SwordRapier
   _discription: 
   _maxItemsInInventorySlot: 1
-  _icon: {fileID: 21300000, guid: 940e5b52081c14fbca49b3d440713816, type: 3}
+  _icon: {fileID: 21300000, guid: c3be05f5440ab3642967e47c0bea416f, type: 3}
   _pefab: {fileID: 7767240128334777144, guid: ac8ad47fe0746e44697e499592237a63, type: 3}
   _type: 1
   _itemBuffStats:
     _healthBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _damageBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _staminaBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _manaBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _intelligenceBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _protectionBuff:
-      _name: 
-      _currentValue: 0
-      _baseValue: 0
-    _dexterityBuff:
-      _name: 
       _currentValue: 0
       _baseValue: 0
     _healthPercent: 0
@@ -53,7 +43,6 @@ MonoBehaviour:
     _manaPercent: 0
     _intelligencePercent: 0
     _protectionPercent: 0
-    _dectertityPercent: 0
   _modelInfo:
     _isNacktModelUnload: 0
     _modelsName: []

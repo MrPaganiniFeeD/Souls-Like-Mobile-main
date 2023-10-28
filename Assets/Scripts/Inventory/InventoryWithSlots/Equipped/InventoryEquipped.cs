@@ -6,11 +6,8 @@ using UnityEngine;
 
 namespace Inventory.InventoryWithSlots.Equipped
 {
-    public class InventoryEquipped : IDisposable, IInventory
+    public class InventoryEquipped : IInventory
     {
-        public event Action<WeaponItem, LocationWeaponInHandType> WeaponEquip;
-        public event Action<LocationWeaponInHandType> WeaponUnequip;
-        
         public List<IEquippedSlot> Slots { get; private set; }
         public WeaponSlot WeaponSlot => _weaponSlot;
 
@@ -22,18 +19,9 @@ namespace Inventory.InventoryWithSlots.Equipped
             _fabricSlot = fabricSlot;
             Slots = _fabricSlot.CreateEquippedSlot();
             _weaponSlot = _fabricSlot.WeaponSlot;
-
-            _weaponSlot.WeaponEquipped += OnWeaponEquipped;
-            _weaponSlot.WeaponUnequipped += OnWeaponUnequipped;
+            
         }
-
-        public T GetEquippedItem<T>() where T : EquippedItem
-        {
-            foreach (var equippedSlot in Slots)
-                if (equippedSlot.Item is T)
-                    return (T) equippedSlot.Item;
-            return null;
-        }
+        
         public bool TryEquipped(EquippedItem item)
         {
             foreach (var slot in Slots)
@@ -58,35 +46,6 @@ namespace Inventory.InventoryWithSlots.Equipped
             }
 
             return false;
-        }
-
-        private void OnWeaponEquipped(WeaponItem arg1, LocationWeaponInHandType arg2) => 
-            WeaponEquip?.Invoke(arg1, arg2);
-
-        private void OnWeaponUnequipped(WeaponItem arg1, LocationWeaponInHandType arg2) => 
-            WeaponUnequip?.Invoke(arg2);
-
-        public void UpdateAllWeapon()
-        {
-            UpdateWeapon(_weaponSlot.LeftHandWeapon, LocationWeaponInHandType.LeftHand);
-            UpdateWeapon(_weaponSlot.RightHandWeapon, LocationWeaponInHandType.RightHand);
-            UpdateWeapon(_weaponSlot.TwoHandWeaponItem, LocationWeaponInHandType.TwoHand);
-        }
-
-        private void UpdateWeapon(WeaponItem weapon,
-            LocationWeaponInHandType locationWeaponInHandType)
-        {
-            if (weapon != null)
-            {
-                WeaponEquip?.Invoke(weapon, locationWeaponInHandType);
-                Debug.Log(locationWeaponInHandType);
-            }
-        }
-
-        public void Dispose()
-        {
-            _weaponSlot.WeaponEquipped -= OnWeaponEquipped;
-            _weaponSlot.WeaponUnequipped -= OnWeaponUnequipped;
         }
     }
 }

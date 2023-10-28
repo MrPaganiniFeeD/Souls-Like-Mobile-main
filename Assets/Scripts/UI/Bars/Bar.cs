@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -22,7 +22,6 @@ namespace UI.Bars
 
         protected void UpdateValue()
         {
-            Debug.Log("Update Value");
             _slider.value = Stat.Value;
         }
     }

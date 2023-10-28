@@ -12,7 +12,6 @@ public sealed class Coroutines : MonoBehaviour
     {
         get
         {
-            Debug.Log("Instatiate coroutines");
             if (m_instance == null)
             {
                 var gameObject = new GameObject("[COROUTINE SERVICES]");
@@ -26,7 +25,6 @@ public sealed class Coroutines : MonoBehaviour
 
     public static Coroutine StartCoroutines(IEnumerator enumerator)
     {
-        Debug.Log("StartCoroutines");
         return _instance.StartCoroutine(enumerator);
     }
 

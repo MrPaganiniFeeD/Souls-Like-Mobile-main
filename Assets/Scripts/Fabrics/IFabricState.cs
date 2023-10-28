@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PlayerLogic.States.State;
+using Hero.States.State;
 
 public interface IFabricState
 {

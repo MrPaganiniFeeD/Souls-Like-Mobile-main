@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NTC.Global.System;
-using PlayerLogic.States.Transition;
-using PlayerLogic.Stats;
+using Hero.States.Transition;
+using Hero.Stats;
 using UnityEngine;
 
 public class DeathEnemyState : EnemyState

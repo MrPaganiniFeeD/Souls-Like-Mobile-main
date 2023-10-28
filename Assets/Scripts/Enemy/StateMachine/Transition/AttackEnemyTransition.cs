@@ -1,4 +1,4 @@
-﻿using PlayerLogic.States.Transition;
+﻿using Hero.States.Transition;
 using UnityEngine;
 
 public class AttackEnemyTransition : ITransition

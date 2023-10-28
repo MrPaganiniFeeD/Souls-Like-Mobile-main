@@ -1,10 +1,23 @@
+using System;
+
 public class ItemState : IItemState
 {
+    public event Action StateChanged;
+    
     private int _itemAmount;
     private bool _isItemEquipped;
 
-    public int Amount { get => _itemAmount; set => _itemAmount = value; }
-    public bool IsEquipped { get => _isItemEquipped; set => _isItemEquipped = value; }
+    public int Amount
+    {
+        get => _itemAmount;
+        set
+        {
+            _itemAmount = value;
+            StateChanged?.Invoke();
+        }
+    }
+
+    public bool IsEquipped => _isItemEquipped;
     
     public ItemState()
     {
@@ -14,6 +27,13 @@ public class ItemState : IItemState
 
     public void UnEquipped()
     {
-        IsEquipped = false;
+        _isItemEquipped = false;
+        StateChanged?.Invoke();
+    }
+
+    public void Equipped()
+    {
+        _isItemEquipped = true;
+        StateChanged?.Invoke();
     }
 }

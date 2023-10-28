@@ -27,7 +27,6 @@ namespace SimpleInputNamespace
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
-			Debug.Log("On pointer down");
 			button.value = true;
 		}
 

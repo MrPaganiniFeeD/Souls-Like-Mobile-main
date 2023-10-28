@@ -16,13 +16,13 @@ TagManager:
   - 
   - 
   - 
-  - Weapon
+  - 
   - Player
   - SecVision
   - Ragdoll
   - Enemy
-  - 
-  - 
+  - EnemyWeapon
+  - PlayerWeapon
   - 
   - 
   - 

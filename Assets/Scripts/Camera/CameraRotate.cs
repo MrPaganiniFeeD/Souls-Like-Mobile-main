@@ -1,17 +1,17 @@
 using Infrastructure.Services;
+using UnityEditor;
 using UnityEngine;
 
 namespace Cam
 {
     public class CameraRotate
     {
-        private IInputService _inputService;
         private float _lookAngel;
         private float _pivotAngel;
         private float _minimumPivot = -35;
         private float _maximumPivot = 35;
-        private float _lookSpeed = 0.1f;
-        private float _pivotSpeed = 0.07f;
+        private float _lookSpeed = 0.05f;
+        private float _pivotSpeed = 0.035f;
         private Transform _selfTransform;
         private Transform _cameraPivotTransform;
 
@@ -21,13 +21,12 @@ namespace Cam
         {
             _selfTransform = selfTransform;
             _cameraPivotTransform = cameraPivotTransform;
-            _inputService = inputService;
         }
 
-        public void Rotation()
+        public void Rotation(Vector2 rotateDelta)
         {
-            _lookAngel += (_inputService.MouseX * _lookSpeed) / Time.fixedDeltaTime;
-            _pivotAngel -= (_inputService.MouseY * _pivotSpeed) / Time.fixedDeltaTime;
+            _lookAngel += (rotateDelta.x * _lookSpeed) / Time.deltaTime;
+            _pivotAngel -= (rotateDelta.y * _pivotSpeed) / Time.deltaTime;
             _pivotAngel = Mathf.Clamp(_pivotAngel, _minimumPivot, _maximumPivot);
             
             Vector3 rotation = Vector3.zero;
@@ -40,6 +39,14 @@ namespace Cam
 
             targetRotation = Quaternion.Euler(rotation);
             _cameraPivotTransform.localRotation = targetRotation;
+        }
+
+        public void Rotation(Quaternion rotation)
+        {
+            _selfTransform.rotation = rotation;
+            
+            _lookAngel = rotation.x;
+            _pivotAngel = rotation.y;
         }
     }
 }

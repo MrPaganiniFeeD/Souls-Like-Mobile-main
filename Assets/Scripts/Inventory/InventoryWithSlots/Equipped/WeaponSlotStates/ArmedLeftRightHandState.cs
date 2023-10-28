@@ -3,8 +3,7 @@ using Inventory.Item.EquippedItem.Weapon;
 
 public class ArmedLeftRightHandState : WeaponSlotState
 {
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
+    public override event Action<WeaponEventInfo> WeaponEquipped;
 
 
     public ArmedLeftRightHandState(IWeaponSlotStateMachine stateMachine,
@@ -22,21 +21,21 @@ public class ArmedLeftRightHandState : WeaponSlotState
         LeftHandWeapon = leftHandWeaponItem;
         RightHandWeapon = rightHandWeapon;
         TwoHandWeapon = null;
-        WeaponEquipped?.Invoke(LeftHandWeapon, LocationWeaponInHandType.LeftHand);
-        WeaponEquipped?.Invoke(RightHandWeapon,LocationWeaponInHandType.RightHand);
+        WeaponEquipped?.Invoke(new WeaponEventInfo(LeftHandWeapon, LocationWeaponInHandType.LeftHand, false));
+        WeaponEquipped?.Invoke(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
     }
 
     protected override void EquipLeftHand(WeaponItem newLeftHandWeapon)
     {
-        WeaponUnequipped?.Invoke(LeftHandWeapon, LocationWeaponInHandType.LeftHand);
-        WeaponEquipped?.Invoke(newLeftHandWeapon,LocationWeaponInHandType.LeftHand);
+        ClearSlot(new WeaponEventInfo(LeftHandWeapon, LocationWeaponInHandType.LeftHand, false));
+        WeaponEquipped?.Invoke(new WeaponEventInfo(newLeftHandWeapon, LocationWeaponInHandType.LeftHand, false));
         LeftHandWeapon = newLeftHandWeapon;
     }
 
     protected override void EquipRightHand(WeaponItem newRightHandWeapon)
     {
-        WeaponUnequipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.RightHand);
-        WeaponEquipped?.Invoke(newRightHandWeapon,LocationWeaponInHandType.RightHand);
+        ClearSlot(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
+        WeaponEquipped?.Invoke(new WeaponEventInfo(newRightHandWeapon, LocationWeaponInHandType.RightHand, false));
         RightHandWeapon = newRightHandWeapon;
     }
 
@@ -45,15 +44,13 @@ public class ArmedLeftRightHandState : WeaponSlotState
         switch (locationWeaponInHandType)
         {
             case LocationWeaponInHandType.LeftHand:
-                WeaponUnequipped?.Invoke(LeftHandWeapon, LocationWeaponInHandType.LeftHand);
-                ClearStats(LeftHandWeapon.Info);
+                ClearSlot(new WeaponEventInfo(LeftHandWeapon, LocationWeaponInHandType.LeftHand, false));
                 StateMachine.Enter<ArmedRightHandState>(LeftHandWeapon,
                     RightHandWeapon,
                     TwoHandWeapon);
                 break;
             case LocationWeaponInHandType.RightHand:
-                WeaponUnequipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.RightHand);
-                ClearStats(RightHandWeapon.Info);
+                ClearSlot(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
                 StateMachine.Enter<ArmedLeftHandState>(LeftHandWeapon,
                     RightHandWeapon,
                     TwoHandWeapon);

@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class ItemStatPanel : MonoBehaviour
@@ -11,20 +8,27 @@ public class ItemStatPanel : MonoBehaviour
     private void Awake()
     {
         _uiStatItems = GetComponentsInChildren<UIStatItem>();
+        Clear();
     }
 
-    private void OnEnable()
+    public void UpdateStats(ItemBuffStats buffStats)
     {
-        
-    }
-
-    private void ShowStats(ItemBuffStats buffStats)
-    {
-        foreach (var uiStat in _uiStatItems)
+        var allStats = buffStats.GetAllStats();
+        for (var i = 0; i < _uiStatItems.Length; i++)
         {
-            //_uiStatItems.SetValue();
+            var uiStat = _uiStatItems[i];
+            uiStat.UpdateValue(allStats[i]);
         }
-        
     }
-    
+
+    public void Clear()
+    {
+        foreach (var uiStat in _uiStatItems) 
+            uiStat.Clear();
+    }
+
+    public void OnDisable()
+    {
+        Clear();
+    }
 }

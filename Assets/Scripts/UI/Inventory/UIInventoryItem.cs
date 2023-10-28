@@ -1,8 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class UIInventoryItem : UIItem
+﻿public class UIInventoryItem : UIItem
 {
 
 }

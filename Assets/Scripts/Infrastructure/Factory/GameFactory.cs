@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Infrastructure.AssetsManagement;
 using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 
 namespace Infrastructure.Factory
@@ -12,13 +12,15 @@ namespace Infrastructure.Factory
     {
         public event Action CreatedPlayer;
         private readonly IAssets _assets;
+        private readonly AllServices _allServices;
 
         public List<ISavedProgress> ProgressesWriter { get; } = new List<ISavedProgress>();
         public List<ISavedProgressReader> ProgressesReader { get; } = new List<ISavedProgressReader>();
         
-        public GameFactory(IAssets assets)
+        public GameFactory(IAssets assets, AllServices allServices)
         {
             _assets = assets;
+            _allServices = allServices;
         }
 
         public GameObject CreatePlayer(GameObject at)
@@ -35,6 +37,15 @@ namespace Infrastructure.Factory
 
         public GameObject CreateLockOnUI() =>
             InstantiateRegister(AssetsPath.LockOnUIPath);
+
+        public GameObject CreateCanvasCamera()
+        {
+            var canvasCamera = InstantiateRegister(AssetsPath.CanvasCameraPath)
+                .GetComponent<CanvasCamera>();
+            _allServices.RegisterSingle<CanvasCamera>().To(canvasCamera);
+            return canvasCamera.gameObject;
+        }
+
         public IStatsProvider CreateStatsProvider() => 
             new ClassStats(ClassType.Warrior);
 
@@ -60,13 +71,18 @@ namespace Infrastructure.Factory
             return soundService;
         }
 
-        private GameObject InstantiateRegister(string namePrefab)
+        public GameObject InstantiateRegister(string namePrefab)
         {
             GameObject prefab = _assets.Instantiate(namePrefab);
             RegisterService(prefab);
             return prefab;
         }
-
+        public GameObject InstantiateRegister(string namePrefab, Quaternion quaternion, Vector3 position, Transform parent)
+        {
+            GameObject prefab = _assets.Instantiate(namePrefab, quaternion, position, parent);
+            RegisterService(prefab);
+            return prefab;
+        }
         private GameObject InstantiateRegisterNonZenject(string namePrefab)
         {
             GameObject prefab = _assets.InstantiateNonZenject(namePrefab);

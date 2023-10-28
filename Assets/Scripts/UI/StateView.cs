@@ -1,6 +1,6 @@
-using PlayerLogic.States;
-using PlayerLogic.States.State;
-using PlayerLogic.States.StateMachine;
+using Hero;
+using Hero.States.State;
+using Hero.States.StateMachine;
 using TMPro;
 using UnityEngine;
 

@@ -1,10 +1,11 @@
 using System;
 using Inventory.InventoryWithSlots.Equipped;
+using UnityEngine;
 
 public class InventorySlot : IInventorySlot
 {
-    public event Action InstalledItem;
-    public event Action UninstalledItem;
+    public event Action<Item> InstalledItem;
+    public event Action<Item> UninstalledItem;
 
     public int ItemID => Item.Info.ID;
     public Item Item { get; private set; }
@@ -13,20 +14,15 @@ public class InventorySlot : IInventorySlot
     public int Amount => Item.State.Amount;
 
 
-    public bool ItemIsEquipped { get; }
+    public bool ItemIsEquipped => Item.State.IsEquipped;
     public bool IsFull => Amount == Capacity;
+    public bool IsEmpty => Item == null; 
 
     private readonly InventoryEquipped _inventoryEquipped;
 
     public InventorySlot()
     {
-        
     }
-    public InventorySlot(InventoryEquipped inventoryEquipped)
-    {
-        _inventoryEquipped = inventoryEquipped;
-    }
-
     public InventorySlot(Item item)
     {
         SetItem(item);
@@ -36,7 +32,7 @@ public class InventorySlot : IInventorySlot
     {   
         Item = item;
         Capacity = item.Info.MaxItemsInInventorySlot;
-        InstalledItem?.Invoke();   
+        InstalledItem?.Invoke(Item);   
     }
 
     public bool TryEquippedItem()
@@ -56,13 +52,13 @@ public class InventorySlot : IInventorySlot
     public void AddItem(int count)
     {
         Item.State.Amount += count;
-        InstalledItem?.Invoke();
+        InstalledItem?.Invoke(Item);
     }
     public void Clear()
     {
         Item.State.Amount = 0;
         Item = null;
-        UninstalledItem?.Invoke();
+        UninstalledItem?.Invoke(Item);
     }
     
 }

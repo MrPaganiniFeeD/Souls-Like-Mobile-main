@@ -1,10 +1,11 @@
 using System;
 using Inventory.Item.EquippedItem.Weapon;
+using UnityEngine;
 
 public abstract class WeaponSlotState
 {
-    public virtual event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public virtual event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
+    public virtual event Action<WeaponEventInfo> WeaponEquipped;
+    public virtual event Action<WeaponEventInfo> WeaponUnequipped;
     
     public WeaponItem LeftHandWeapon { get; protected set; }
     public WeaponItem RightHandWeapon { get; protected set; }
@@ -79,6 +80,16 @@ public abstract class WeaponSlotState
                 }
 
                 break;
+            case LocationWeaponInHandType.None:
+                if (TryEquipWeaponInTwoHand(weapon))
+                {
+                    CreateAttack(weapon);
+                    EquipTwoHand(weapon);
+                    return true;
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(whichHandInHandType), whichHandInHandType, null);
         }
 
         return false;
@@ -115,12 +126,19 @@ public abstract class WeaponSlotState
             null,
             weapon);
 
-    protected void ClearStats(IWeaponInfo weaponInfo) => 
+    public abstract void Unequip(LocationWeaponInHandType locationWeaponInHandType);
+
+    protected void ClearSlot(WeaponEventInfo weaponEventInfo)
+    {
+        ClearStats(weaponEventInfo.WeaponItem.Info);
+        weaponEventInfo.WeaponItem.State.UnEquipped();
+        Debug.Log("ClearSlot " + weaponEventInfo.WeaponItem.Info.Name + weaponEventInfo.IsUnarmed);
+        WeaponUnequipped?.Invoke(weaponEventInfo);
+    }
+
+    private void ClearStats(IWeaponInfo weaponInfo) => 
         _applyingItemStats.UnEquip(weaponInfo);
 
-    public abstract void Unequip(LocationWeaponInHandType locationWeaponInHandType);
-    
-    
 
     private bool TryEquipWeaponInLeftHand(WeaponItem equipItem,
         LocationWeaponInHandType whichHand)
@@ -161,16 +179,8 @@ public abstract class WeaponSlotState
 
     private bool TryEquipWeaponInTwoHand(WeaponItem equipItem)
     {
-        if (equipItem.Info.LocationWeaponInHandType == LocationWeaponInHandType.TwoHand)
-        {
-            if (LeftHandWeapon != null)
-                WeaponUnequipped?.Invoke(LeftHandWeapon, LocationWeaponInHandType.LeftHand);
-            if (RightHandWeapon != null)
-                WeaponUnequipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.RightHand);
-            TwoHandWeapon = equipItem;
-            return true;
-        }
-
-        return false;
+        return true;
     }
+
+    public virtual void Exit() { }
 }

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IUIInventory
 {
-    IInventory Inventory { get;}
+    InventoryWithSlots Inventory { get;}
     UIRenderInventory RenderInventory { get;}
 }

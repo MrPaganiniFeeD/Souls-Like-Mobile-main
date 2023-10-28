@@ -11,7 +11,7 @@ namespace UI.Stats
 
         private StringBuilder _stringBuilder = new StringBuilder();
 
-        public void Show(PlayerLogic.Stats.Stat stat, TMP_Text statName)
+        public void Show(Hero.Stats.Stat stat, TMP_Text statName)
         {
             _statName.text = GetStatTopText(stat, statName);
             _statName.color = statName.color;
@@ -23,7 +23,7 @@ namespace UI.Stats
         {
             gameObject.SetActive(false);
         }
-        private string GetStatTopText(PlayerLogic.Stats.Stat playerStat, TMP_Text statName)
+        private string GetStatTopText(Hero.Stats.Stat playerStat, TMP_Text statName)
         {
             _stringBuilder.Length = 0;
             _stringBuilder.Append(statName.text);
@@ -32,7 +32,7 @@ namespace UI.Stats
 
             return _stringBuilder.ToString();
         }
-        private string GetStatModifiersText(PlayerLogic.Stats.Stat stat)
+        private string GetStatModifiersText(Hero.Stats.Stat stat)
         {
             _stringBuilder.Length = 0;
 

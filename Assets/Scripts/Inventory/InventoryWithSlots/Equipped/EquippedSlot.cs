@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
 
-public class EquippedSlot: IEquippedSlot
+public class EquippedSlot : IEquippedSlot
 {
-    public event Action<IEquippedItemInfo> ItemEquipped;
-    public event Action<IEquippedItemInfo> ItemUnequipped;
-
+    public event Action<EquippedEventInfo> EquippedItem;
+    public event Action<EquippedEventInfo> UnequippedItem;
 
     public EquippedItem Item { get; private set; }
     public EquippedItemType Type => _equippedSlotType;
@@ -18,8 +17,7 @@ public class EquippedSlot: IEquippedSlot
     {
         _equippedSlotType = equippedSlotType;
         _basedItem = basedItem;
-        Equip(basedItem);
-        Debug.Log(Item);
+        Equip(basedItem, true);
     }
     public EquippedSlot(EquippedItemType equippedSlotType)
     {
@@ -31,27 +29,28 @@ public class EquippedSlot: IEquippedSlot
         if (item.Info.Type != _equippedSlotType) 
             return false;
         
-        Equip(item);
+        Equip(item, false);
         return true;
     }
 
     public bool TryUnequip()
     {
         Clear();
-        Equip(_basedItem);
+        Equip(_basedItem, true);
         return true;
     }
 
-    public void Clear()
+    private void Clear()
     {
         Item.State.UnEquipped();
-        ItemUnequipped?.Invoke(Item.Info);
+        UnequippedItem?.Invoke(new EquippedEventInfo(Item.Info, false));
         Item = null;
     }
 
-    private void Equip(EquippedItem newEquippedItem)
+    private void Equip(EquippedItem newEquippedItem, bool isBasedItem)
     {
         Item = newEquippedItem;
-        ItemEquipped?.Invoke(Item.Info);
+        Item.State.Equipped();
+        EquippedItem?.Invoke(new EquippedEventInfo(Item.Info, isBasedItem));
     }
 }

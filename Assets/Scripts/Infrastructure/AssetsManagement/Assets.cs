@@ -17,10 +17,19 @@ namespace Infrastructure.AssetsManagement
             return DiContainerSceneRef.Container.InstantiatePrefab(prefab, position, Quaternion.identity, null);
         }
 
-        public T GetObjectForType<T>(string path) where T : Object
+        public GameObject Instantiate(string namePrefab, Quaternion quaternion, Vector3 position, Transform parent)
         {
-            return GetLoadedObject<T>(path);
+            GameObject prefab = FindPrefab(namePrefab);
+            return DiContainerSceneRef.Container.InstantiatePrefab(prefab, parent);
         }
+
+        public GameObject Instantiate(string namePrefab, GameObject parent)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public T GetObjectForType<T>(string path) where T : Object => 
+            GetLoadedObject<T>(path);
 
         public GameObject InstantiateNonZenject(string namePrefabs)
         {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Bot.Transition;
+using Hero;
 using NTC.Global.System;
-using PlayerLogic.States;
-using PlayerLogic.States.State;
-using PlayerLogic.States.Transition;
-using PlayerLogic.Stats;
+using Hero.States.State;
+using Hero.States.Transition;
+using Hero.Stats;
 using UnityEngine;
 using UnityEngine.AI;
 

@@ -17,6 +17,6 @@ public class EquippedInfo : ItemInfo, IEquippedItemInfo
     public EquippedItemType Type => _type;
     public ItemBuffStats ItemBuffStats => _itemBuffStats;
     
-    public EquippedItem GetCreationItem() =>
-        new EquippedItem(this);
+    public new EquippedItem GetCreationItem() =>
+        new EquippedItem(this, new ItemState());
 }

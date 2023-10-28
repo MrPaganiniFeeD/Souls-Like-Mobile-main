@@ -1,5 +1,5 @@
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 using Zenject;
 

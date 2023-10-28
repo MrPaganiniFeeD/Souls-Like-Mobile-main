@@ -3,8 +3,7 @@ using Inventory.Item.EquippedItem.Weapon;
 
 public class ArmedRightHandState : WeaponSlotState
 {
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public override event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
+    public override event Action<WeaponEventInfo> WeaponEquipped;
 
 
     public ArmedRightHandState(IWeaponSlotStateMachine stateMachine, 
@@ -21,8 +20,8 @@ public class ArmedRightHandState : WeaponSlotState
         base.Enter(leftHandWeaponItem, rightHandWeapon, twoHandWeapon);
         RightHandWeapon = rightHandWeapon;
         LeftHandWeapon = UnarmedLeft;
-        WeaponEquipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.RightHand);
-        WeaponEquipped?.Invoke(LeftHandWeapon, LocationWeaponInHandType.LeftHand);
+        WeaponEquipped?.Invoke(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
+        WeaponEquipped?.Invoke(new WeaponEventInfo(LeftHandWeapon, LocationWeaponInHandType.RightHand, true));
     }
 
     protected override void EquipLeftHand(WeaponItem leftHandWeapon) =>
@@ -32,15 +31,14 @@ public class ArmedRightHandState : WeaponSlotState
 
     protected override void EquipRightHand(WeaponItem newRightHandWeapon)
     {
-        WeaponUnequipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.LeftHand);
-        WeaponEquipped?.Invoke(newRightHandWeapon, LocationWeaponInHandType.RightHand);
+        ClearSlot(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
+        WeaponEquipped?.Invoke(new WeaponEventInfo(newRightHandWeapon, LocationWeaponInHandType.RightHand, false));
         RightHandWeapon = newRightHandWeapon;
     }
     
     public override void Unequip(LocationWeaponInHandType locationWeaponInHandType)
     {
-        WeaponUnequipped?.Invoke(RightHandWeapon, LocationWeaponInHandType.RightHand);
-        ClearStats(RightHandWeapon.Info);
+        ClearSlot(new WeaponEventInfo(RightHandWeapon, LocationWeaponInHandType.RightHand, false));
         StateMachine.Enter<UnarmedState>(LeftHandWeapon,
             RightHandWeapon,
             TwoHandWeapon);

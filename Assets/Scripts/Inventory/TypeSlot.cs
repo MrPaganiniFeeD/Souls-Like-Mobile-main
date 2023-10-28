@@ -1,9 +1,7 @@
 ﻿namespace DefaultNamespace.Inventory
 {
-    public enum TypeSlot
+    public enum TypeEquippedSlot
     {
-        Inventory,
-        Equipped,
-        Weapon
+        
     }
 }

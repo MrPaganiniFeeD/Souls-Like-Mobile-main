@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Inventory.Item.EquippedItem.Weapon;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 
 public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine 
 {
-    public event Action<IEquippedItemInfo> ItemEquipped;
-    public event Action<IEquippedItemInfo> ItemUnequipped;
+    public event Action<EquippedEventInfo> EquippedItem;
+    public event Action<EquippedEventInfo> UnequippedItem;
 
-    public event Action<WeaponItem, LocationWeaponInHandType> WeaponEquipped;
-    public event Action<WeaponItem, LocationWeaponInHandType> WeaponUnequipped;
-
+    public event Action<WeaponEventInfo> WeaponEquipped;
+    public event Action<WeaponEventInfo> WeaponUnequipped;
+    
     public EquippedItem Item { get; }
     public EquippedItemType Type => EquippedItemType.Weapon;
 
@@ -71,8 +71,10 @@ public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine
     {
         if (item is WeaponItem weaponItem)
             if (_currentState.TryEquip(weaponItem, LocationWeaponInHandType.None))
+            {
+                item.State.Equipped();
                 return true;
-
+            }
         return false;
     }
 
@@ -99,10 +101,9 @@ public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine
     public WeaponSlot SetFistWeapon()
     {
         Debug.Log("SetFistWeapon");
-        Enter<ArmedTwoHandState>(null,
+        Enter<UnarmedState>(null,
             null,
             _unarmedTwoHand);
-        Debug.Log(_currentState.TwoHandWeapon.Info.Name);
         return this;
     }
 
@@ -111,6 +112,7 @@ public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine
         TState newState = GetState<TState>();
         if (_currentState != null)
         {
+            _currentState.Exit();
             _currentState.WeaponEquipped -= OnWeaponEquipped;
             _currentState.WeaponUnequipped -= OnWeaponUnequipped;
         }
@@ -122,13 +124,11 @@ public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine
         return newState;
     }
 
-    private void OnWeaponUnequipped(WeaponItem weapon,
-        LocationWeaponInHandType locationWeaponInHandType) => 
-        WeaponUnequipped?.Invoke(weapon, locationWeaponInHandType);
+    private void OnWeaponUnequipped(WeaponEventInfo weaponEventInfo) => 
+        WeaponUnequipped?.Invoke(weaponEventInfo);
 
-    private void OnWeaponEquipped(WeaponItem weapon,
-        LocationWeaponInHandType locationWeaponInHandType) =>
-        WeaponEquipped?.Invoke(weapon, locationWeaponInHandType);
+    private void OnWeaponEquipped(WeaponEventInfo weaponEventInfo) =>
+        WeaponEquipped?.Invoke(weaponEventInfo);
 
     private TState GetState<TState>() where TState : WeaponSlotState => 
         _allState[typeof(TState)] as TState;
@@ -136,6 +136,20 @@ public class WeaponSlot : IWeaponSlot, IDisposable, IWeaponSlotStateMachine
     public void Dispose()
     {
         _currentState.WeaponEquipped -= OnWeaponEquipped;
-        _currentState.WeaponUnequipped -= OnWeaponEquipped;
+        _currentState.WeaponUnequipped -= OnWeaponUnequipped;
+    }
+}
+
+public class WeaponEventInfo
+{
+    public WeaponItem WeaponItem;
+    public LocationWeaponInHandType LocationWeaponInHandType;
+    public bool IsUnarmed;
+
+    public WeaponEventInfo(WeaponItem weaponItem, LocationWeaponInHandType locationWeaponInHandType, bool isUnarmed)
+    {
+        WeaponItem = weaponItem;
+        LocationWeaponInHandType = locationWeaponInHandType;
+        IsUnarmed = isUnarmed;
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using PlayerLogic.States;
+using Hero.States;
 using UnityEngine;
 using Zenject;
 

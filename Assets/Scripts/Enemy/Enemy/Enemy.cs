@@ -1,5 +1,5 @@
 using DefaultNamespace.Bot.Stats;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 using UnityEngine.Serialization;
 

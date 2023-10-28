@@ -1,29 +1,41 @@
 using System;
 using System.Collections.Generic;
 using Fabrics;
+using UnityEngine;
 
 
 public class InventoryWithSlots : IInventory
 {
     public event Action StateChanged;
-
+    
     public List<IInventorySlot> Slots { get; private set; }
     private IFabricSlot _fabricSlot;
+    private int _capacity = 50;
 
 
     public InventoryWithSlots(IFabricSlot fabricSlot)
     {
         _fabricSlot = fabricSlot;
-        
+        Slots = new List<IInventorySlot>();
+        for (int i = 0; i < _capacity; i++)
+        {
+            Slots.Add(_fabricSlot.CreateInventorySlot());
+        }
     }
 
     public bool TryToAdd(Item item)
     {
         if (item.Info.MaxItemsInInventorySlot == 1)
         {
-            CreateNewSlots(item);
-            StateChanged?.Invoke();
-            return true;
+            foreach (var slot in Slots)
+            {
+                if (slot.IsEmpty)
+                {
+                    slot.SetItem(item);
+                    StateChanged?.Invoke();
+                    return true;
+                }
+            }
         }
         else
         {
@@ -37,10 +49,10 @@ public class InventoryWithSlots : IInventory
                 }
             }
 
-            var clonedItem = item.Clone();
+            /*var clonedItem = item.Clone();
             CreateNewSlots(clonedItem);
             StateChanged?.Invoke();
-            return true;
+            return true;*/
         }
 
         return false;
@@ -58,12 +70,13 @@ public class InventoryWithSlots : IInventory
             int remainder = count - countCanAdd;
             Item clonedItem = item.Clone();
             clonedItem.State.Amount = remainder;
-            CreateNewSlots(clonedItem);
+            TryToAdd(clonedItem);
         }
     }
     private IInventorySlot CreateNewSlots(Item item)
     {
-        IInventorySlot newSlot = _fabricSlot.CreateInventorySlot(item);
+        IInventorySlot newSlot = _fabricSlot.CreateInventorySlot(item);  
+        Debug.Log(Slots);
         Slots.Add(newSlot);
         return newSlot;
     }

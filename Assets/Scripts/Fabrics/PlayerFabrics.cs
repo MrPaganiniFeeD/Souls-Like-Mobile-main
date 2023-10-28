@@ -1,12 +1,11 @@
 using Fabrics;
+using Hero;
 using Infrastructure.Services;
 using Infrastructure.Services.Inventory;
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.Animation;
-using PlayerLogic.States;
-using PlayerLogic.States.State;
-using PlayerLogic.States.StateMachine;
-using PlayerLogic.Stats;
+using Hero.States.State;
+using Hero.States.StateMachine;
+using Hero.Stats;
 using UnityEngine;
 using Zenject;
 
@@ -50,7 +49,8 @@ public class PlayerFabrics : MonoBehaviour
         _fabricTransitions = new FabricTransitions(_inputService,
             _playerStateMachine,
             _rollStateData,
-            _playerStats);
+            _playerStats,
+            GetComponent<IDamageDetection>());
         _fabricState = new FabricPlayerStates(_inputService,
             _inventoryService,
             _playerStats,

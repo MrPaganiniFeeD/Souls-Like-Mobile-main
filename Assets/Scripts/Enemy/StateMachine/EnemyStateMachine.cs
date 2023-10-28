@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using PlayerLogic.States.State;
-using PlayerLogic.Stats;
+using Hero.States.State;
+using Hero.Stats;
 using UnityEngine;
 
 public class EnemyStateMachine : MonoBehaviour

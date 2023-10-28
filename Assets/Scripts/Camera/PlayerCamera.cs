@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Cam;
+using Hero;
 using Infrastructure.Services;
-using PlayerLogic.Animation;
-using PlayerLogic.States;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -53,9 +52,11 @@ public class PlayerCamera : MonoBehaviour
         _currentState.Enter();
     }
     
-    public void FixedUpdate() => 
-        _currentState?.FixedUpdate();
-    
+    private void Update()
+    {
+        _currentState?.Update();
+    }
+
     public void SetTarget(Lockable target)
     {
         if (target != null)
@@ -67,7 +68,11 @@ public class PlayerCamera : MonoBehaviour
         ICameraState state = ChangeState<T>();
         state.Enter();
     }
-    
+    public void SwitchState<T>(Quaternion rotation) where T : class, ICameraState
+    {
+        ICameraState state = ChangeState<T>();
+        state.Enter(rotation);
+    }
     private TState ChangeState<TState>() where TState : class, ICameraState
     {
         TState newState = GetState<TState>();

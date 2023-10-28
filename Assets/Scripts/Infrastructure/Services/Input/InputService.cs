@@ -18,11 +18,19 @@ namespace Infrastructure.Services
         public abstract event Action LeftHandAttackButtonUp;
         public abstract event Action RightHandAttackButtonUp;
         public abstract event Action MainAttackButtonUp;
-        public abstract event Action<Vector2> ChangeAxis;
+        public abstract event Action<Vector2> AxisChange;
+        public abstract event Action<Vector2> RotationInputChange;
         public abstract event Action RollButtonUp;
         public abstract event Action LockOnButtonUp;
         public abstract event Action LeftLockOnButtonUp;
         public abstract event Action RightLockOnButtonUp;
+
+        protected readonly InputMap InputPlayerMap;
+
+        public InputService(InputMap inputPlayerMap)
+        {
+            InputPlayerMap = inputPlayerMap;
+        }
 
         public float MouseY { get; protected set; }
         public float MouseX { get; protected set; }
@@ -35,7 +43,7 @@ namespace Infrastructure.Services
         public bool IsLeftHandAttackButtonUp() =>
             SimpleInput.GetButtonUp(LeftHandAttack);
 
-        public abstract void SetAimArea(AimArea aimArea);
+        public abstract void SetRotationZone(RectTransform transformRotationZone);
 
         protected bool IsRightHandAttackButtonUp() =>
             SimpleInput.GetButtonUp(RightHandAttack);

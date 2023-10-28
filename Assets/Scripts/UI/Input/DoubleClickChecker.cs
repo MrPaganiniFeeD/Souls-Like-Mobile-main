@@ -33,7 +33,7 @@ public class DoubleClickChecker : MonoBehaviour, IPointerUpHandler
             var UISlot = eventData.pointerDrag.GetComponentInParent<UISlot>();
 
             _firstClickTime = Time.time;
-            StartCoroutine(DoubleClickDetection(UIitem.ItemInfo, UISlot.Slot));
+            //StartCoroutine(DoubleClickDetection(UIitem.ItemInfo, UISlot.Slot));
         }
     }
 

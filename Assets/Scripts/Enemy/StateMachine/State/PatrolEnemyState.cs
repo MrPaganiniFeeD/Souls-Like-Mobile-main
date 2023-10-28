@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using PlayerLogic.States.Transition;
+using Hero.States.Transition;
 
 public class PatrolEnemyState : EnemyState
 {

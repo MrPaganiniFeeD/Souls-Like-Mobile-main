@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using PlayerLogic.States.Transition;
-using PlayerLogic.Stats;
+using Hero.States.Transition;
+using Hero.Stats;
 using UnityEngine;
 
-public class TakeDamageEnemyState : EnemyState, IEnemyState<ITakeDamageStatePayloaded>
+public class TakeDamageEnemyState : EnemyState, IEnemyState<ITakeDamageEnemyStatePayloaded>
 {
     private readonly BaseMoveModule _baseMoveModule;
     private readonly Rigidbody _rigidbody;
@@ -30,7 +30,7 @@ public class TakeDamageEnemyState : EnemyState, IEnemyState<ITakeDamageStatePayl
         _takeDamageAudioClip = takeDamageAudioClip;
     }
 
-    public void Enter(ITakeDamageStatePayloaded payloaded)
+    public void Enter(ITakeDamageEnemyStatePayloaded payloaded)
     {
         base.Enter();    
         if (_health.Value - payloaded.Damage > 0)

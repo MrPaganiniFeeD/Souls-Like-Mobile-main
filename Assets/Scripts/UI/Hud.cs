@@ -7,12 +7,14 @@ using Zenject;
 
 public class Hud : MonoBehaviour
 {
-    [SerializeField] private Image _joystickArea;
-    
+    private Canvas _canvas;
+
     [Inject]
-    private void Construct(IInputService inputService)
+    private void Construct(IInputService inputService, CanvasCamera canvasCamera)
     {
-        inputService.SetAimArea(GetComponentInChildren<AimArea>());    
+        inputService.SetRotationZone(GetComponentInChildren<AimArea>().GetComponent<RectTransform>());
+        _canvas = GetComponent<Canvas>();
+        _canvas.worldCamera = canvasCamera.Camera;
     }
     public void ClosedPanel(GameObject panel)
     {

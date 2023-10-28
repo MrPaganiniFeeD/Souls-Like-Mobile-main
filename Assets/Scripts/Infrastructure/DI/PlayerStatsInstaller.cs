@@ -1,4 +1,4 @@
-using PlayerLogic.Stats;
+using Hero.Stats;
 using Zenject;
 
 public class PlayerStatsInstaller : MonoInstaller

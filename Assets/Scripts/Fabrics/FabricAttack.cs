@@ -1,7 +1,5 @@
+using Hero;
 using Infrastructure.Services;
-using PlayerLogic.Animation;
-using PlayerLogic.States;
-using UnityEngine;
 
 namespace Fabrics
 {

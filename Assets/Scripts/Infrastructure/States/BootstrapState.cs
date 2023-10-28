@@ -7,7 +7,7 @@ using Infrastructure.Services;
 using Infrastructure.Services.Inventory;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -47,6 +47,7 @@ namespace Infrastructure.States
             RegisterSaveLoadService();
             RegisterInventoryService();
             RegisterInputService();
+            
         }
         
         private void RegisterDataBaseService()
@@ -71,7 +72,7 @@ namespace Infrastructure.States
         private void RegisterGameFactory() =>
             _allServices
                 .RegisterSingle<IGameFactory>()
-                .To(new GameFactory(_allServices.Single<IAssets>()));
+                .To(new GameFactory(_allServices.Single<IAssets>(), _allServices));
 
         private void RegisterPersistentProgressService() =>
             _allServices
@@ -86,14 +87,16 @@ namespace Infrastructure.States
 
         private void RegisterInputService()
         {
+            var inputMap = new InputMap();
+            inputMap.Enable();
             if(Application.isEditor)
                 _allServices
                     .RegisterSingle<IInputService>()
-                    .To(new StandaloneInputService());
+                    .To(new StandaloneInputService(inputMap));
             else if(Application.isMobilePlatform)
                 _allServices
                     .RegisterSingle<IInputService>()
-                    .To(new MobileInputService());       
+                    .To(new MobileInputService(inputMap));       
         }
         
     }

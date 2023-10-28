@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3970001259217691208}
   - component: {fileID: 3998598158777775404}
   - component: {fileID: 3988425371445845260}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: SM_Wep_Sword_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3678707683873987254}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: WeaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4743134364502039667}
   - component: {fileID: 5320554879709046563}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sword_Rapier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 5530429702757016988}
   - component: {fileID: 839059546601852826}
   - component: {fileID: 3219261177030979232}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

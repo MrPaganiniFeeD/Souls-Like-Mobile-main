@@ -1,6 +1,5 @@
-﻿using PlayerLogic.State.StateMachine;
-using PlayerLogic.States.StateMachine;
-using PlayerLogic.States.Transition;
+﻿using Hero.States.StateMachine;
+using Hero.States.Transition;
 
 namespace Bot.Transition
 {

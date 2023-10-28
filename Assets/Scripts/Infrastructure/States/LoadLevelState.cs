@@ -1,10 +1,11 @@
 ﻿using DefaultNamespace.UI.Scene;
+using Hero;
 using Infrastructure.AssetsManagement;
 using Infrastructure.DI;
 using Infrastructure.Factory;
 using Infrastructure.Services;
 using Infrastructure.Services.PersistentProgress;
-using PlayerLogic.States;
+using Hero.States;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Infrastructure.States
 {
     public class LoadLevelGameState : IPayloadedGameState<string>
     {
+        private const string CanvasCameraPath = "Prefabs/UI/CanvasCamera";
         private const string InitialPointTag = "InitialPoint";
         private const string EnemySpawnerTag = "EnemySpawner";
 
@@ -24,6 +26,7 @@ namespace Infrastructure.States
         private LoadingCurtain _loadingCurtain;
         private readonly DiContainer _diContainer;
         private PlayerCamera _camera;
+        private GameObject _uiCamera;
 
 
         public LoadLevelGameState(GameStateMachine stateMachine,
@@ -75,11 +78,11 @@ namespace Infrastructure.States
             soundService.EnableMusic();
         }
 
-        private void InformProgressReaders()
-        {
-            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressesReader)
-                progressReader.LoadProgress(_persistentProgressService.PlayerProgress);
-        }
+            private void InformProgressReaders()
+            {
+                foreach (ISavedProgressReader progressReader in _gameFactory.ProgressesReader)
+                    progressReader.LoadProgress(_persistentProgressService.PlayerProgress);
+            }
 
         private void InitGameWorld()
         {
@@ -94,6 +97,7 @@ namespace Infrastructure.States
         {
             _camera = Camera.main.GetComponentInParent<PlayerCamera>();
             _camera.Construct(player, _inputService);
+            _uiCamera = _gameFactory.CreateCanvasCamera();
         }
 
         private void InitSpawners(Player player, PlayerCamera playerCamera)

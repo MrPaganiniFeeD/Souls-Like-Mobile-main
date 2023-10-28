@@ -14,6 +14,9 @@ public abstract class UIItem : MonoBehaviour
     public IItemInfo ItemInfo { get; private set; }
     public void Refresh(IInventorySlot slot)
     {
+        if(slot.Item == null)
+            return;
+            
         ItemInfo = slot.Item.Info;
         _imageIcon.sprite = ItemInfo.Icon;
         _imageIcon.gameObject.SetActive(true);

@@ -1,9 +1,9 @@
 using System;
 
-public interface IInventorySlot
+public interface IInventorySlot : ISlot
 {
-    event Action InstalledItem;
-    event Action UninstalledItem;
+    event Action<Item> InstalledItem;
+    event Action<Item> UninstalledItem;
 
 
     int ItemID { get; }
@@ -11,6 +11,7 @@ public interface IInventorySlot
     int Amount { get; }
     int Capacity { get; }
     bool IsFull { get; }
+    bool IsEmpty { get; }
     bool ItemIsEquipped { get; }
 
     void SetItem(Item item);

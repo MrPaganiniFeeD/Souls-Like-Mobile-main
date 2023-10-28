@@ -1,9 +1,8 @@
 using System;
-using System.Net.Http.Headers;
 using Cam;
 using Infrastructure.Services;
-using PlayerLogic.Animation;
 using UnityEngine;
+
 public class DefaultCameraState : ICameraState, IDisposable
 {
         private float _smooth = 1;
@@ -46,22 +45,37 @@ public class DefaultCameraState : ICameraState, IDisposable
         }
 
 
-        public void Enter() => 
+        public void Enter()
+        {
             _playerStateAnimator.SetDefaultCamera();
+            _inputService.RotationInputChange += Rotate;
+        }
 
-        public void FixedUpdate()
+        public void Enter(Quaternion rotation)
+        {
+            _cameraRotation.Rotation(rotation);
+            _inputService.RotationInputChange += Rotate;
+        }
+
+        public void Update()
         {
             _cameraFollow.Follow();
-            _cameraRotation.Rotation();
             _cameraCollisions.UpdateCollisions();
         }
 
-        public void Exit() { }
+        public void Exit() => 
+            _inputService.RotationInputChange -= Rotate;
+
+        public void Dispose()
+        {
+            _inputService.RotationInputChange -= Rotate;
+            _inputService.LockOnButtonUp -= LockOnButtonHandler;
+        }
+
+        private void Rotate(Vector2 context) => 
+            _cameraRotation.Rotation(context);
 
 
         private void LockOnButtonHandler() => 
             _camera.SwitchState<LockOnCameraState>();
-
-        public void Dispose() => 
-            _inputService.LockOnButtonUp -= LockOnButtonHandler;
-    }
+}

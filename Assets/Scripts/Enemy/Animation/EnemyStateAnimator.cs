@@ -9,6 +9,7 @@ public class EnemyStateAnimator : MonoBehaviour, IAnimationStateReader
     public event Action ExitState;
     public event Action EnterState;
     public event Action StepFootLR;
+    public event Action HitWeapon;
 
     [SerializeField] private int _weaponNumber;
 
@@ -56,7 +57,7 @@ public class EnemyStateAnimator : MonoBehaviour, IAnimationStateReader
         _animator.SetBool(Moving, false);
         SetSpeed(0);
     }
-
+    
     public void StartPatrolAnimation(float speed)
     {
         _animator.SetTrigger(Patrol);
@@ -89,6 +90,9 @@ public class EnemyStateAnimator : MonoBehaviour, IAnimationStateReader
 
     public void StopDieAnimation() => 
         _animator.ResetTrigger(Dead);
+
+    public void Hit() =>
+        HitWeapon?.Invoke();
 
     public void StartApplyDamageAnimation() => 
         _animator.SetTrigger(TakeDamage);

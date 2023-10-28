@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Inventory.InventoryWithSlots.Equipped;
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 
 namespace Fabrics

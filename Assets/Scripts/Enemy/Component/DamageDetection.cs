@@ -1,4 +1,5 @@
 using System;
+using Hero.States.State;
 using UnityEngine;
 
 
@@ -17,6 +18,7 @@ public class DamageDetection : MonoBehaviour, IDamageDetection, IDamageable
 
     public void ApplyDamage(int damage)
     {
+        Debug.Log("Hit");
         ReceivedDamage?.Invoke();
         TakingDamage?.Invoke(damage);
     }

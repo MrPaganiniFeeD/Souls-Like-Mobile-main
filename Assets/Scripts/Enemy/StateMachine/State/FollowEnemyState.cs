@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PlayerLogic.States.Transition;
+using Hero.States.Transition;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -37,12 +37,6 @@ public class FollowEnemyState : EnemyState, IDisposable
         _stateAnimator.StepFootLR += PlayAudioClip;
     }
 
-    private void PlayAudioClip()
-    {
-        _audioSource.volume = 0.15f;
-        _audioSource.PlayOneShot(_followStateDate.StepAudioClip);
-    }
-
     public override void Enter()
     {
         base.Enter();
@@ -55,13 +49,19 @@ public class FollowEnemyState : EnemyState, IDisposable
         if (PlayerNotReached())
             _agent.destination = _player.position;
         _stateAnimator.UpdateSpeed(_agent.speed);
-        _stateAnimator.UpdateVelocity(_transform.forward.x, _transform.forward.z);
+        _stateAnimator.UpdateVelocity(_transform.forward.x, Math.Abs(_transform.forward.z));
     }
 
     public override void Exit()
     {
         base.Exit();
         _stateAnimator.StopFollowAnimation();
+    }
+
+    private void PlayAudioClip()
+    {
+        _audioSource.volume = 0.15f;
+        _audioSource.PlayOneShot(_followStateDate.StepAudioClip);
     }
 
     private bool PlayerNotReached() => 

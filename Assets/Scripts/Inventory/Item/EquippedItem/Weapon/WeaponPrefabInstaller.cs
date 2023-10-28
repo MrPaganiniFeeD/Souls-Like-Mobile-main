@@ -4,7 +4,7 @@ using Inventory.Item.EquippedItem.Weapon;
 using UnityEngine;
 using Zenject;
 
-namespace PlayerLogic.Weapon
+namespace Hero.Weapon
 {
     public class WeaponPrefabInstaller : MonoBehaviour, IWeaponPrefabInstaller
     {
@@ -19,7 +19,7 @@ namespace PlayerLogic.Weapon
         {
             _weaponSlot = inventoryService.InventoryEquipped.WeaponSlot;
             _weaponSlot.WeaponEquipped += OnWeaponEquip;
-            _weaponSlot.WeaponUnequipped += OnWeaponUnquip;
+            _weaponSlot.WeaponUnequipped += OnWeaponUnequip;
         }
 
         public void Start() => 
@@ -60,9 +60,10 @@ namespace PlayerLogic.Weapon
         } 
         
 
-        private void OnWeaponUnquip(WeaponItem weapon ,LocationWeaponInHandType hand)
+        private void OnWeaponUnequip(WeaponEventInfo eventInfo)
         {
-            switch (hand)
+            var location = eventInfo.LocationWeaponInHandType;
+            switch (location)
             {
                 case LocationWeaponInHandType.LeftHand:
                     _leftHand.UnLoadWeaponModel();
@@ -77,9 +78,12 @@ namespace PlayerLogic.Weapon
             }
         }
 
-        private void OnWeaponEquip(WeaponItem weapon, LocationWeaponInHandType whichHand)
+        private void OnWeaponEquip(WeaponEventInfo eventInfo)
         {
-            switch (whichHand)
+            var weapon = eventInfo.WeaponItem;
+            var location = eventInfo.LocationWeaponInHandType;
+            var isUnarmed = eventInfo.IsUnarmed;
+            switch (location)
             {
                 case LocationWeaponInHandType.LeftHand:
                     LoadWeaponOnLeftHand(weapon);
@@ -108,27 +112,26 @@ namespace PlayerLogic.Weapon
                     break;
                 case LocationWeaponInHandType.LeftAndRightHand:
                     var installedPrefab = _dualHand.LoadWeaponModel(weapon);
-                    var weaponPrefab = installedPrefab.GetComponent<WeaponPrefab>();
-                    weaponPrefab.enabled = true;
                     
-
                     LeftHandWeaponModel leftHandWeaponModel = 
                         installedPrefab.GetComponentInChildren<LeftHandWeaponModel>();
                     RightHandWeaponModel rightHandWeaponModel =
                         installedPrefab.GetComponentInChildren<RightHandWeaponModel>();
 
-                    var leftHand = _leftHand.LoadWeaponModelNotInstantiate(leftHandWeaponModel.gameObject);
-                    var rightHand = _rightHand.LoadWeaponModelNotInstantiate(rightHandWeaponModel.gameObject);
-                    weaponPrefab.SetColliders(new[]
+                    _leftHand.SetPosition(leftHandWeaponModel.gameObject);
+                    _rightHand.SetPosition(rightHandWeaponModel.gameObject);
+                    _leftHand.SetWeaponModel(leftHandWeaponModel.gameObject);
+                    _rightHand.SetWeaponModel(rightHandWeaponModel.gameObject);
+                    /*weaponModel.SetColliders(new[]
                     {
                         leftHand.GetComponentInChildren<Collider>(),
                         rightHand.GetComponentInChildren<Collider>()
                     });
-                    weaponPrefab.SetColliderDetections(new []
+                    weaponModel.SetColliderDetections(new []
                     {
                         leftHand.GetComponentInChildren<ColliderDetection>(),
                         rightHand.GetComponentInChildren<ColliderDetection>()
-                    });
+                    });*/
                     break;
             }
         }
@@ -148,7 +151,7 @@ namespace PlayerLogic.Weapon
         public void OnDisable()
         {
             _weaponSlot.WeaponEquipped -= OnWeaponEquip;
-            _weaponSlot.WeaponUnequipped -= OnWeaponUnquip;           
+            _weaponSlot.WeaponUnequipped -= OnWeaponUnequip;           
         }
     }
 

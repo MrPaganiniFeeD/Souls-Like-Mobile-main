@@ -1,13 +1,15 @@
 ﻿using System;
 using Infrastructure.Services;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-    public class StandaloneInputService : InputService
+public class StandaloneInputService : InputService, IDisposable
     {
         public override event Action LeftHandAttackButtonUp;
         public override event Action RightHandAttackButtonUp;
         public override event Action MainAttackButtonUp;
-        public override event Action<Vector2> ChangeAxis;
+        public override event Action<Vector2> AxisChange;
+        public override event Action<Vector2> RotationInputChange;
         public override event Action RollButtonUp;
         public override event Action LockOnButtonUp;
         public override event Action LeftLockOnButtonUp;
@@ -24,26 +26,34 @@ using UnityEngine;
             {
                 if (_currentAxis == value) return;
 
-                ChangeAxis?.Invoke(value);
+                AxisChange?.Invoke(value);
                 _currentAxis = value;
             }
         }
 
-        public override void SetAimArea(AimArea aimArea) { }
+        public StandaloneInputService(InputMap inputMap) : base(inputMap)
+        {
+            InputPlayerMap.Mouse.MouseDelta.performed += OnMouseDeltaPerformed;
+        }
+
+        public override void SetRotationZone(RectTransform transformRotationZone)
+        {
+            
+        }
 
 
         public override void Update()
         {
             if(IsRolloverButtonUp() || IsSpaceButtonUp())
                 RollButtonUp?.Invoke();
-            if ((IsLeftHandAttackButtonUp() || IsLeftClickMouseButton()) && IsMainAttackButtonUp() == false)
+            if ((IsLeftHandAttackButtonUp()) && IsMainAttackButtonUp() == false)
             {
                 LastClickedTimeLeftHandAttackButton = _lastClickLeftButtonTime;
                 LeftHandAttackButtonUp?.Invoke();
                 _lastClickLeftButtonTime = Time.time;
             }
 
-            if ((IsRightHandAttackButtonUp() || IsRightClickMouseButton()) && IsMainAttackButtonUp() == false)
+            if ((IsRightHandAttackButtonUp()) && IsMainAttackButtonUp() == false)
             {
                 LastClickedTimeRightHandAttackButton = _lastClickRightButtonTime;
                 RightHandAttackButtonUp?.Invoke();
@@ -61,13 +71,13 @@ using UnityEngine;
 
             
             Axis = GetSimpleInputAxis();
-            MouseX = SimpleInput.GetAxis("MouseX");
-            MouseY = SimpleInput.GetAxis("MouseY");
-
+            RotationInputChange?.Invoke(new Vector2(Input.GetAxis("Mouse X"),
+                Input.GetAxis("Mouse Y")));
         }
 
         private bool IsSpaceButtonUp() => 
             SimpleInput.GetKey(KeyCode.Space);
+
         private bool IsRightClickMouseButton() => 
             SimpleInput.GetKey(KeyCode.Mouse1);
 
@@ -80,13 +90,19 @@ using UnityEngine;
         private bool IsLeftLockOnClickButton() =>
             SimpleInput.GetButtonUp(LeftLockOn);
 
+        private void OnMouseDeltaPerformed(InputAction.CallbackContext context) => 
+            RotationInputChange?.Invoke(context.ReadValue<Vector2>());
+
         private bool IsRightLockOnClickButton() =>
             SimpleInput.GetButtonUp(RightLockOn);
-        
-        
+
+
         private static Vector2 GetSimpleInputAxis() =>
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
 
         private static Vector2 GetUnityAxis() =>
             new Vector2(Input.GetAxis(Horizontal), Input.GetAxis(Vertical));
+
+        public void Dispose() => 
+            InputPlayerMap.Mouse.MouseDelta.performed -= OnMouseDeltaPerformed;
     }

@@ -1,4 +1,4 @@
-using PlayerLogic.Stats;
+using Hero.Stats;
 using UnityEngine;
 using Zenject;
 

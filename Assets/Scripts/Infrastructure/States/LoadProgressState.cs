@@ -2,7 +2,7 @@
 using DefaultNamespace.Infrastructure;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
-using PlayerLogic.Stats;
+using Hero.Stats;
 
 namespace Infrastructure.States
 {
@@ -24,7 +24,7 @@ namespace Infrastructure.States
         public void Enter()
         {
             LoadProgressOrInit();
-            _stateMachine.Enter<LoadLevelGameState, string>(_progressService.PlayerProgress.WorldData.PositionOnLevel.Level);
+            _stateMachine.Enter<StartGameState>();
         }
 
         public void Exit()

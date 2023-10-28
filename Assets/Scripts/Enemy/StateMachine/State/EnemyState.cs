@@ -1,8 +1,8 @@
 
 using System;
 using System.Collections.Generic;
-using PlayerLogic.States.State;
-using PlayerLogic.States.Transition;
+using Hero.States.State;
+using Hero.States.Transition;
 
 [Serializable]
 public class EnemyState : IState

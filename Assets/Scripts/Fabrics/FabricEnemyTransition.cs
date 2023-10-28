@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Bot.Transition;
 using Fabrics;
-using PlayerLogic.States.StateMachine;
-using PlayerLogic.States.Transition;
+using Hero.States.StateMachine;
+using Hero.States.Transition;
 using UnityEngine;
 
 [Serializable]
 public class FabricEnemyTransition : IFabricTransition
 {
-    
     private Transform _selfTransform;
     private IObservableTransform _targetObservableTransform;
     private IObservableTransform _selfObservableTransform;
@@ -30,7 +29,7 @@ public class FabricEnemyTransition : IFabricTransition
         {
             TypeEnemyTransition.Idle => new IdleEnemyTransition(),
             TypeEnemyTransition.Patrol => new PatrolTransition(),
-           // TypeEnemyTransition.Roll => new RollEnemyTransition(),
+           //   TypeEnemyTransition.Roll => new RollEnemyTransition(),
 
             _ => new UnknownTransition()
         };    

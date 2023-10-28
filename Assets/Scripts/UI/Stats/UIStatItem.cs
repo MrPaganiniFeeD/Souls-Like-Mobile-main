@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Hero.Stats;
 using TMPro;
 using UnityEngine;
 
@@ -30,15 +31,24 @@ public class UIStatItem : MonoBehaviour
         Debug.Log(buffStat.DexterityPercentBonus,    _nameStat);
 
     }
-
-    public void SetItemBuffStats(ItemBuffStats itemBuffStats) => _itemBuffStats = itemBuffStats;
     
-    private void UpdateValue()
+    public void UpdateValue(Stat stat)
     {
-        /*
-        _nameStat.text = _itemBuffStats.Name;
-        _value.text = _itemBuffStats.Value.ToString();
-    */
+        if(stat.Value > 0)
+        {
+            _nameStat.text = stat.Name;
+            _value.text = "+" + stat.Value;
+        }
+        else if (stat.Value < 0)
+        {
+            _nameStat.text = stat.Name;
+            _value.text = "-" + stat.Value;
+        }
+    }
+    public void Clear()
+    {
+        _nameStat.text = "";
+        _value.text = "";
     }
     
 }

@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hero;
 using Infrastructure.Services;
 using Infrastructure.Services.Inventory;
-using PlayerLogic.Animation;
-using PlayerLogic.States;
-using PlayerLogic.States.State;
-using PlayerLogic.States.StateMachine;
-using PlayerLogic.States.Transition;
-using PlayerLogic.Stats;
+using Hero.States.State;
+using Hero.States.StateMachine;
+using Hero.States.Transition;
+using Hero.Stats;
 using UnityEngine;
+using w.States.State;
 
 namespace Fabrics
 {
@@ -92,7 +92,13 @@ namespace Fabrics
                     _inputService,
                     _baseMove,
                     _rollStateData,
-                    _characterController)
+                    _characterController),
+                [typeof(TakeDamageState)] = new TakeDamageState(GetTransition(TypePlayerState.TakeDamage),
+                    _playerStateMachine,
+                    _animator,
+                    _playerStats),
+                [typeof(DeathState)] = new DeathState(_playerStateMachine, 
+                    _animator)
             };
             return allState;
         }

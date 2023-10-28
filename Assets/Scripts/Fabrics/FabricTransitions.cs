@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Services;
-using PlayerLogic.States.State;
-using PlayerLogic.States.StateMachine;
-using PlayerLogic.States.Transition;
-using PlayerLogic.Stats;
-using PlayerLogic.Transition;
+using Hero.States.State;
+using Hero.States.StateMachine;
+using Hero.States.Transition;
+using Hero.Stats;
+using Hero.Transition;
 
 namespace Fabrics
 {
@@ -15,17 +15,20 @@ namespace Fabrics
         private readonly PlayerStateMachine _playerStateMachine;
         
         private PlayerStats _playerStats;
+        private readonly IDamageDetection _damageDetection;
         private RollStateData _rollingData;
 
         public FabricTransitions(IInputService inputService,
             PlayerStateMachine playerStateMachine,
             RollStateData rollingData,
-            PlayerStats playerStats)
+            PlayerStats playerStats,
+            IDamageDetection damageDetection)
         {
             _inputService = inputService;
             _playerStateMachine = playerStateMachine;
             _rollingData = rollingData;
             _playerStats = playerStats;
+            _damageDetection = damageDetection;
         }
         public ITransition CreateTransition(TypeTransitions type)
         {
@@ -45,6 +48,9 @@ namespace Fabrics
                         _playerStats,
                         _inputService,
                         _rollingData);
+                case TypeTransitions.TakeDamage:
+                    return new TakeDamageTransition(_playerStateMachine,
+                        _damageDetection);
             }
             return new UnknownTransition();
         }
